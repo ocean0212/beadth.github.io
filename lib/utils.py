@@ -41,7 +41,7 @@ def check_tradecal():
 def set_us_tradecal(days): pass
 
 
-@retry(stop_max_attempt_number=3, wait_fixed=61 * 1000)
+@retry(stop_max_attempt_number=3, wait_fixed=90 * 1000)
 @extract_context_info
 def get_ts_us_tradecal():
     pro = ts.pro_api(config.TOKEN)

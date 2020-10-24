@@ -1,5 +1,6 @@
 import logging
 import json
+import sys
 import traceback
 from collections import namedtuple
 
@@ -90,12 +91,14 @@ def save_last(br):
             "other": item.tv_index
         }
         tmp[item.code] = {
-            'day': utils.today().isoformat(),
-            "high": float(high),
-            "low": float(low),
             "close": float(close.text),
             "open": float(open_price.text),
-            "other": item.tv_index
+            "pre": float(pre_close.text),
+            "low": float(low),
+            "high": float(high),
+            "other": item.tv_index,
+            'day': utils.today().isoformat(),
+
         }
         logger.info("ITEM DATA CODE : {} --- {}".format(item.code, data))
     current = {'time': utils.today().isoformat(), 'data': tmp}
@@ -109,7 +112,8 @@ def quit_browser(br):
 def main():
     logger.info("start...")
     utils.init_sentry()
-
+    if not cf.DEBUG:
+        time.sleep(20)
     if not utils.check_tradecal():
         return
     run()
@@ -118,17 +122,23 @@ def main():
 @retry(stop_max_attempt_number=20, wait_fixed=3)
 def run():
     while True:
-        path = 'sp500_all.json'
-        all = utils.read_json_file(path)
-        br = browser()
-        start(br)
-        loading_page(br)
-        current = save_last(br)
-        all[current['time']] = current['data']
-        utils.save_to_json(path, all)
-        utils.split_save_json(all, cf.DATA_US_DIR, 'sp500_{}.json')
-        quit_browser(br)
-        return
+        try:
+            path = os.path.join(cf.DATA_US_DIR,'sp500_all.json')
+            all = utils.read_json_file(path)
+            br = browser()
+            start(br)
+            loading_page(br)
+            current = save_last(br)
+            all[current['time']] = current['data']
+            utils.save_to_json(path, all)
+            output = os.path.join(cf.OUTPUT, 'sp500_all.json')
+            utils.save_to_json(output, all)
+            utils.split_save_json(all, cf.OUTPUT, 'sp500_{}.json')
+            quit_browser(br)
+            return 
+        except Exception as e :
+            logger.error(e,exc_info=1)
+            raise e
 
 if __name__ == '__main__':
     main()
