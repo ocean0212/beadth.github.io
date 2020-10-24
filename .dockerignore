@@ -1,0 +1,10 @@
+.git/
+.env_file
+*.log
+.idea/
+__pycache__/
+.DS_Store
+local*.yaml
+*.iml
+*.csv
+LICENSE
