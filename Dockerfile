@@ -1,4 +1,4 @@
-FROM enkito/base:500
+FROM enkito/base:sp500
 
 ENV LC_ALL=C.UTF-8
 ENV PYTHONUNBUFFERED 1

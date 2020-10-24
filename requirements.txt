@@ -1,0 +1,12 @@
+tushare
+selenium
+retrying==1.3.3
+pytz
+mock
+sentry_sdk
+python_dateutil==2.8.0
+pandas>=0.18.0
+requests>=2.0.0
+sqlalchemy
+redis
+psycopg2-binary
