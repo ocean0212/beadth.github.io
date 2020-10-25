@@ -118,7 +118,7 @@ def main():
 @retry(stop_max_attempt_number=20, wait_fixed=3)
 def run():
     while True:
-        path = 'sp500_all.json'
+        path = os.path.join(cf.DATA_US_DIR,'sp500_all.json')
         all = utils.read_json_file(path)
         br = browser()
         start(br)
