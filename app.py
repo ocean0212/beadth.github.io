@@ -109,7 +109,7 @@ def quit_browser(br):
 def main():
     logger.info("start...")
     utils.init_sentry()
-
+    time.sleep(20)
     if not utils.check_tradecal():
         return
     run()
