@@ -9,6 +9,7 @@ WEBDRIVER_URL = os.getenv("WEBDRIVER_URL", "http://10.0.0.9:9099/wd/hub")
 DEBUG = int(os.getenv("DEBUG", 1))
 DATA_DIR = os.path.join(BASE_DIR, 'data')
 DATA_US_DIR = os.path.join(BASE_DIR, 'data', 'us')
+OUTPUT = os.path.join(BASE_DIR, os.getenv("OUTPUT", 'output'))
 
 
 

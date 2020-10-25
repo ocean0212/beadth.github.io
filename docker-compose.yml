@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  spider:
+    image: enkito/breadth
+    restart: always
+    environment:
+      WEBDRIVER_URL: "http://chrome:4444/wd/hub"
+      OUTPUT: "output"
+      DEBUG: "0"
+    command: python3 /usr/src/app/app.py  # 定义启动容器执行的命令
+    depends_on:
+      - chrome
+    volumes:
+      - .:/usr/src/app
+    networks:
+      - default
+
+  chrome:
+    image: selenium/standalone-chrome:85.0
+    ports:
+      - "4444:4444"
+    networks:
+      - default
+
+networks:
+  default:
+    driver: bridge

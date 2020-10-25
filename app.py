@@ -109,7 +109,8 @@ def quit_browser(br):
 def main():
     logger.info("start...")
     utils.init_sentry()
-    time.sleep(20)
+    if not cf.DEBUG:
+        time.sleep(20)
     if not utils.check_tradecal():
         return
     run()
@@ -126,7 +127,9 @@ def run():
         current = save_last(br)
         all[current['time']] = current['data']
         utils.save_to_json(path, all)
-        utils.split_save_json(all, cf.DATA_US_DIR, 'sp500_{}.json')
+        output = os.path.join(cf.OUTPUT, 'sp500_all.json')
+        utils.save_to_json(output, all)
+        utils.split_save_json(all, cf.OUTPUT, 'sp500_{}.json')
         quit_browser(br)
         return
 
