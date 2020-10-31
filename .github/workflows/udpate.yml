@@ -1,9 +1,13 @@
 name: update data
 
 on:
-
+  workflow_dispatch:
   schedule:
     - cron: 29 21 * * 1-5
+    - cron: 30 22 * * 1-5
+    - cron: 50 22 * * 1-5
+    - cron: 29 23 * * 1-5
+
 
 jobs:
   GetData:
@@ -38,8 +42,8 @@ jobs:
       - name: Commit changes
         uses: EndBug/add-and-commit@v4
         with:
-          author_name: beadth
-          author_email: 73101124+beadth@users.noreply.github.com
+          author_name: ${{ secrets.WORKFLOW_USERNAME }}
+          author_email: ${{ secrets.WORKFLOW_EMAIL }}
           message: "Update"
           add: "*.json"
         env:

@@ -91,12 +91,14 @@ def save_last(br):
             "other": item.tv_index
         }
         tmp[item.code] = {
-            'day': utils.today().isoformat(),
-            "high": float(high),
-            "low": float(low),
             "close": float(close.text),
             "open": float(open_price.text),
-            "other": item.tv_index
+            "pre": float(pre_close.text),
+            "low": float(low),
+            "high": float(high),
+            "other": item.tv_index,
+            'day': utils.today().isoformat(),
+
         }
         logger.info("ITEM DATA CODE : {} --- {}".format(item.code, data))
     current = {'time': utils.today().isoformat(), 'data': tmp}
