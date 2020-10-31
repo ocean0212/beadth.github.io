@@ -7,7 +7,7 @@ import {GET_INIT_CITY_LIST} from "./constants";
 
 function* getInitList() {
   try {
-    const res = yield axios.get('/data.json');
+    const res = yield axios.get('/us/sp500_30.json');
     console.log(res, "----")
     console.log(res.data)
     const action = initListAction(res.data.data);

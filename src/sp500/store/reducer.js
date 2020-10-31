@@ -2,10 +2,10 @@ import * as constants from './constants';
 import { fromJS} from 'immutable';
 
 const defaultState = fromJS({
-  cityList: [],
-  srcCityList: [],
-  currentCity: "上海",
-  currentZoom: 13,
+  dataList: [],
+  totaLList: [],
+  dayList: [],
+  codeList: [],
 });
 
 
@@ -17,10 +17,12 @@ const changeCurrentCity = (state, action) => {
   return state.merge(result)
 }
 
-const initCityList = (state, action) => {
+const initDataList = (state, action) => {
   return state.merge({
-    cityList: action.cityList,
-    srcCityList: action.srcCityList
+    dataList: action.dataList,
+    totalList: action.totalList,
+    dayList:action.dayList,
+    codeList:action.codeList,
   })
 }
 
@@ -30,8 +32,8 @@ const initCityList = (state, action) => {
 
 const reducer = (state = defaultState, action) => {
   switch(action.type) {
-    case constants.INIT_CITY_LIST:
-      return initCityList(state, action)
+    case constants.INIT_DATA_LIST:
+      return initDataList(state, action)
     case constants.CHANGE_CURRENT_CITY:
       return changeCurrentCity(state, action)
     default:
