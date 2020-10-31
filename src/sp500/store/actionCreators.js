@@ -10,7 +10,6 @@ export const changeCurrentCity = (city, zoom) => ({
 
 export const InitDataList = (data) => {
   // 数据处理
-  var result = {};
   var dayList = [];
   var codeList = [];
   var totalList = [];
@@ -35,7 +34,7 @@ export const InitDataList = (data) => {
   }
   // code list
   for (var k in data[0]){
-    if (k !=  "data"){
+    if (k !== "data"){
       codeList.push(k)
     }
   }
