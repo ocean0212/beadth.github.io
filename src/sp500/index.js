@@ -3,8 +3,8 @@ import {Row, Col} from 'antd';
 import {connect} from "react-redux"
 
 import {Layout, Menu} from 'antd';
-import { Table, Tag, Space } from 'antd';
-import {Chart} from '@antv/g2';
+import { Table } from 'antd';
+// import {Chart} from '@antv/g2';
 
 import {getMtData,} from "./store/actionCreators";
 
@@ -27,95 +27,95 @@ class SP500 extends Component {
   }
 }
 
-const CHART = (props) => {
-  const source = props.dataList.map((arr) => {
-    return {
-      name: arr[0],
-      day: arr[1],
-      sales: arr[2],
-    };
-  });
-  const chart = new Chart({
-    container: 'container',
-    autoFit: true,
-    height: 500,
-  });
-  chart.data(source);
-  chart.scale('name', {
-    type: 'cat',
-    values: props.codeList,
-  });
-  chart.scale('day', {
-    type: 'cat',
-    values: props.daylList,
-  });
-  chart.scale('sales', {
-    nice: true,
-    height: 50,
-  });
-
-  chart.axis('name', {
-    tickLine: null,
-    grid: {
-      alignTick: false,
-      line: {
-        style: {
-          lineWidth: 1,
-          lineDash: null,
-          stroke: '#f0f0f0',
-        },
-      },
-    },
-  });
-
-  chart.axis('day', {
-    title: null,
-    grid: {
-      alignTick: false,
-      line: {
-        style: {
-          lineWidth: 1,
-          lineDash: null,
-          stroke: '#f0f0f0',
-        },
-      },
-    },
-  });
-
-  chart.tooltip({
-    showMarkers: false,
-  });
-
-  chart
-    .polygon()
-    .position('name*day')
-    .color('sales', '#BAE7FF-#1890FF-#0050B3')
-    .label('sales', {
-      offset: -2,
-      style: {
-        fill: '#fff',
-        shadowBlur: 2,
-        shadowColor: 'rgba(0, 0, 0, .45)',
-      },
-    })
-    .style({
-      lineWidth: 1,
-      stroke: '#fff',
-    });
-  chart.interaction('element-active')
-  return (
-    chart.render()
-  )
-
-
-}
+// {/*const CHART = (props) => {*/}
+//   const source = props.dataList.map((arr) => {
+//     return {
+//       name: arr[0],
+//       day: arr[1],
+//       sales: arr[2],
+//     };
+//   });
+//   const chart = new Chart({
+//     container: 'container',
+//     autoFit: true,
+//     height: 500,
+//   });
+//   chart.data(source);
+//   chart.scale('name', {
+//     type: 'cat',
+//     values: props.codeList,
+//   });
+//   chart.scale('day', {
+//     type: 'cat',
+//     values: props.daylList,
+//   });
+//   chart.scale('sales', {
+//     nice: true,
+//     height: 50,
+//   });
+//
+//   chart.axis('name', {
+//     tickLine: null,
+//     grid: {
+//       alignTick: false,
+//       line: {
+//         style: {
+//           lineWidth: 1,
+//           lineDash: null,
+//           stroke: '#f0f0f0',
+//         },
+//       },
+//     },
+//   });
+//
+//   chart.axis('day', {
+//     title: null,
+//     grid: {
+//       alignTick: false,
+//       line: {
+//         style: {
+//           lineWidth: 1,
+//           lineDash: null,
+//           stroke: '#f0f0f0',
+//         },
+//       },
+//     },
+//   });
+//
+//   chart.tooltip({
+//     showMarkers: false,
+//   });
+//
+//   chart
+//     .polygon()
+//     .position('name*day')
+//     .color('sales', '#BAE7FF-#1890FF-#0050B3')
+//     .label('sales', {
+//       offset: -2,
+//       style: {
+//         fill: '#fff',
+//         shadowBlur: 2,
+//         shadowColor: 'rgba(0, 0, 0, .45)',
+//       },
+//     })
+//     .style({
+//       lineWidth: 1,
+//       stroke: '#fff',
+//     });
+//   chart.interaction('element-active')
+//   return (
+//     chart.render()
+//   )
+//
+//
+// }
 
 const SP500UI = (props) => {
   const {Header, Footer} = Layout;
-  const style1 = {background: '#0092ff', padding: '0 0'};
+  // const style1 = {background: '#0092ff', padding: '0 0'};
   const style2 = {background: '#FF0000', padding: '0 0'};
 
-  const { Column, ColumnGroup } = Table;
+  const { Column } = Table;
   return (
 
     <Layout>
