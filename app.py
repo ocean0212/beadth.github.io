@@ -36,7 +36,7 @@ index_dict = [
     {"tv_index": "INDEX:SSTW", "code": "REI"},
     {"tv_index": "INDEX:SKTW", "code": "TEC"},
     {"tv_index": "INDEX:SUTW", "code": "UTL"},
-    {"tv_index": "INDEX:S5TW", "code": "SPY"},
+    {"tv_index": "INDEX:S5TW", "code": "SPX"},
 ]
 
 INDEXS = []
@@ -110,7 +110,7 @@ def quit_browser(br):
 
 @utils.extract_context_info
 def main():
-    logger.info("start...")
+    logger.info("start... today: {} new: {}".format(utils.today().isoformat(), utils.now().isoformat()))
     utils.init_sentry()
     if not cf.DEBUG:
         time.sleep(20)

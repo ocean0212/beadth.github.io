@@ -1,10 +1,13 @@
 import time
 import json
 import os
+import copy
 import datetime
 import logging
 from uuid import uuid4
 from functools import wraps, partial
+from pprint import pprint as pr
+from decimal import Decimal
 import base64
 
 import tushare as ts
@@ -32,8 +35,8 @@ class ToJsonEncoder(json.JSONEncoder):
 def check_tradecal():
     if config.DEBUG:
         return  True
-    toady = datetime.date.today().strftime("%Y%m%d")
-    if toady in get_ts_us_tradecal():
+    t = today().strftime("%Y%m%d")
+    if t in get_ts_us_tradecal():
         return True
     return False
 
@@ -166,8 +169,9 @@ def split_save_json(data, f=None, ft=None, sp=[30,100,360]):
         data = None,
     )
     for i in sp:
-        last_sp = li[-i:]
-        print(last_sp)
+        last_sp = copy.deepcopy(li[-i:])
+        for j in last_sp:
+            j['TOTAL'] = total_dict(j['data'], 'close')
         path = os.path.join(f, ft.format(str(i)))
         fb = open(path, 'w')
         tt = json.dumps(last_sp)
@@ -176,7 +180,12 @@ def split_save_json(data, f=None, ft=None, sp=[30,100,360]):
         fb.flush()
         fb.close()
 
-
+def total_dict(data, data_key):
+    num = Decimal(0.00)
+    for k,v in data.items():
+        if k == "SPX":continue
+        num += Decimal(v[data_key])
+    return float(num.quantize(Decimal('0.00')))
 
 def today():
     n = now()

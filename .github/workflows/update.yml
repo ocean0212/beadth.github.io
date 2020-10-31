@@ -1,0 +1,105 @@
+name: update
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    - cron: 30 13 * * 1-5
+    - cron: 30 14 * * 1-5
+    - cron: 30 15 * * 1-5
+    - cron: 30 17 * * 1-5
+    - cron: 30 19 * * 1-5
+    - cron: 30 23 * * 1-5
+
+
+jobs:
+  GetData:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.1
+        with:
+          ref: sp500
+          persist-credentials: false
+
+      - name: Run docker-compose
+        run: docker-compose up -d
+
+      - name: pip
+        run: |
+          pip3 install setuptools
+          pip3 install -r requirements.txt
+          sudo apt-get install tree
+
+      - name: run
+        run: python3 app.py
+
+      - name: Show data files
+        run: tree .
+
+      - name: cp
+        run:  |
+          mkdir /opt/data
+          cp output/* /opt/data
+
+      - name: Show data
+        run: |
+          tree /opt/data
+          ls -l /opt/data
+
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v4
+        with:
+          author_name: ${{ secrets.WORKFLOW_USERNAME }}
+          author_email: ${{ secrets.WORKFLOW_EMAIL }}
+          message: "Update"
+          add: "*.json"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout site
+        uses: actions/checkout@v2.3.1
+        with:
+          ref: site
+          persist-credentials: false
+
+      - name: cp site
+        run: |
+          rm -rf public/us/*.json
+          cp -rf /opt/data/*.json public/us
+          ls -l public/us
+          tree .
+          git branch
+          git status
+
+      - name: Commit changes site
+        uses: EndBug/add-and-commit@v4
+        with:
+          author_name: ${{ secrets.WORKFLOW_USERNAME }}
+          author_email: ${{ secrets.WORKFLOW_EMAIL }}
+          message: "Update web"
+          add: "public/*"
+          ref: site
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout site
+        uses: actions/checkout@v2.3.1
+        with:
+          ref: site
+          persist-credentials: false
+
+      - name: Install and Build 🔧
+        run: |
+          npm install
+          npm run build
+
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: build
+

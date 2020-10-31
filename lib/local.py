@@ -77,7 +77,7 @@ if __name__ == '__main__':
         CF(f='../data/INDEX_SSTW, 1D.csv', code='REI', index='SSTW'),
         CF(f='../data/INDEX_SKTW, 1D.csv', code='TEC', index='SKTW'),
         CF(f='../data/INDEX_SUTW, 1D.csv', code='UTL', index='SUTW'),
-        CF(f='../data/INDEX_S5TW, 1D.csv', code='SPY', index='S5TW'),
+        CF(f='../data/INDEX_S5TW, 1D.csv', code='SPX', index='S5TW'),
     ]
     all = read_csvs(flist)
     # print(type(utils.read_json_file('./data/us/all.json')), len(utils.read_json_file('./data/us/all.json')))
