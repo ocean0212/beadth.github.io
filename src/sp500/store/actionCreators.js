@@ -16,13 +16,10 @@ export const InitDataList = (data) => {
 
   for ( var i=0; i<data.length; i++){
     dayList.push(data[i]['time'])
-    var tmp = 0
     for (var key in data[i].data){
-      tmp += data[i].data[key]['close']
       data[i][key] = data[i].data[key]['close'];
     }
-    data[i]['TOTAL'] = tmp
-    totalList.push(tmp)
+    totalList.push(data[i]['TOTAL'])
 
     // var city = data[i].city;
     // if (city in result){
@@ -58,6 +55,7 @@ export const getMtData = () => {
     var url = window.location.href
     axios.get(url + "us/sp500_30.json").then((res) => {
       var data = Base64.decode(res.data.data)
+      console.log(JSON.parse(data).reverse())
       dispatch(InitDataList(JSON.parse(data).reverse())) // action change store
       }).catch(() => { // ajax request error
         console.log("error")
