@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8" />
-  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta content="市场宽度,breadth,Market Breadth,美股市场宽度,Stock Breadth,A股市场宽度" name="Keywords">
-  <meta name="description" content="beadth.app 是收集统计美股市场宽度的网站。Market Breadth。">
-  <meta name="theme-color" content="#000000" />
-  <meta
-          name="Market Breadth"
-          content="股市市场宽度"
-  />
+    <meta charset="utf-8"/>
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta content="市场宽度,breadth,Market Breadth,美股市场宽度,Stock Breadth,A股市场宽度" name="Keywords">
+    <meta name="description" content="beadth.app 是收集统计美股市场宽度的网站。Market Breadth。">
+    <meta name="theme-color" content="#000000"/>
+    <meta
+            name="Market Breadth"
+            content="股市市场宽度"
+    />
 
-  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json"/>
     <!--
     Notice the use of %PUBLIC_URL% in the tags above.
     It will be replaced with the URL of the `public` folder during the build.
@@ -23,10 +23,23 @@
     Learn how to configure a non-root public URL by running `npm run build`.
     -->
 
-  <title>Market Breadth</title>
+    <title>Market Breadth</title>
 </head>
 <body>
 <noscript>You need to enable JavaScript to run this app.</noscript>
 <div id="root"></div>
 </body>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XJLPLKGPCG"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+
+  gtag('js', new Date());
+
+  gtag('config', 'G-XJLPLKGPCG');
+</script>
 </html>

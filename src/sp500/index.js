@@ -115,7 +115,22 @@ const SP500UI = (props) => {
   // const style1 = {background: '#0092ff', padding: '0 0'};
   const style2 = {background: '#FF0000', padding: '0 0'};
 
-  const { Column } = Table;
+  const columns = [
+    {title: 'TIME', dataIndex: 'time',},
+    {title: 'SPX', dataIndex: 'SPX',},
+    {title: 'COM', dataIndex: 'COM',},
+    {title: 'CND', dataIndex: 'CND',},
+    {title: 'CNS', dataIndex: 'CNS',},
+    {title: 'ENE', dataIndex: 'ENE',},
+    {title: 'FIN', dataIndex: 'FIN',},
+    {title: 'HLT', dataIndex: 'HLT',},
+    {title: 'IND', dataIndex: 'IND',},
+    {title: 'MAT', dataIndex: 'MAT',},
+    {title: 'REI', dataIndex: 'REI',},
+    {title: 'TEC', dataIndex: 'TEC',},
+    {title: 'UTL', dataIndex: 'UTL',},
+    {title: 'TOTAL', dataIndex: 'TOTAL',},
+  ]
   return (
 
     <Layout>
@@ -133,13 +148,7 @@ const SP500UI = (props) => {
           {/*  codeList={props.codeList}*/}
           {/*/>*/}
 
-          <Table dataSource={props.dataList} size="middle" pagination={false} responsive="lg">
-            {
-              Object.keys(props.codeList).map((index) => {
-                var item = props.codeList[index]
-                return <Column title={item} dataIndex={item} key={index}/>
-              })
-            }
+          <Table columns={columns} dataSource={props.dataList} size="middle" pagination={false} responsive="lg">
           </Table>
         </Col>
         {/*<Col style={style1} xs={{span: 4}} sm={{span: 4}} md={{span: 4}} lg={{span: 4}} xl={{span: 4}}>*/}

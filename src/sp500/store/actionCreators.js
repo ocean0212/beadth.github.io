@@ -15,10 +15,11 @@ export const InitDataList = (data) => {
   var totalList = [];
 
   for ( var i=0; i<data.length; i++){
-    dayList.push(data[i]['time'])
     for (var key in data[i].data){
       data[i][key] = data[i].data[key]['close'];
     }
+
+    dayList.push(data[i]['time'])
     totalList.push(data[i]['TOTAL'])
 
     // var city = data[i].city;
