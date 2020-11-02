@@ -13,6 +13,12 @@ export const InitDataList = (data) => {
   var dayList = [];
   var codeList = [];
   var totalList = [];
+  var mv20CodeList = []
+  var mv20DataList = []
+
+  for (var mv20k in data[0].data){
+    mv20CodeList.push(mv20k)
+  }
 
   for ( var i=0; i<data.length; i++){
     for (var key in data[i].data){
@@ -30,19 +36,41 @@ export const InitDataList = (data) => {
     // }
 
   }
+
+  for ( var j=0; j<data.length; j++){
+
+    for ( var n=0;n<mv20CodeList.length; n++){
+      mv20DataList.push([j,n ,data[j][mv20CodeList[n]]],)
+
+    }
+  }
+
+  const mv20source = mv20DataList.map((arr) => {
+    return {
+      name: arr[0],
+      day: arr[1],
+      sales: arr[2],
+    };
+  });
+
   // code list
   for (var k in data[0]){
     if (k !== "data"){
       codeList.push(k)
     }
   }
+
   return {
     type: constants.INIT_DATA_LIST,
     dataList: data,
     totalList: totalList,
     dayList: dayList,
     codeList: codeList,
+    mv20CodeList: mv20CodeList,
+    mv20DataList: mv20source,
   }};
+
+
 
 export const changeCurrentZoom = (value) => ({
   type: constants.CHANGE_CURRENT_ZOOM,

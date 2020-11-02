@@ -4,7 +4,7 @@ import {connect} from "react-redux"
 
 import {Layout, Menu} from 'antd';
 import { Table } from 'antd';
-// import {Chart} from '@antv/g2';
+import {Chart} from '@antv/g2';
 
 import {getMtData,} from "./store/actionCreators";
 
@@ -12,12 +12,16 @@ import {getMtData,} from "./store/actionCreators";
 class SP500 extends Component {
 
   render() {
-    const {dataList, totalList, codeList, dayList } = this.props
+    const {dataList, totalList, codeList, dayList,mv20CodeList,mv20DataList } = this.props
+    // return (<CHART/>)
+
     return (<SP500UI
       dataList={dataList}
       totalList={totalList}
       daylList={dayList}
       codeList={codeList}
+      mv20DataList={mv20DataList}
+      mv20CodeList={mv20CodeList}
     />)
   }
 
@@ -27,88 +31,84 @@ class SP500 extends Component {
   }
 }
 
-// {/*const CHART = (props) => {*/}
-//   const source = props.dataList.map((arr) => {
-//     return {
-//       name: arr[0],
-//       day: arr[1],
-//       sales: arr[2],
-//     };
-//   });
-//   const chart = new Chart({
-//     container: 'container',
-//     autoFit: true,
-//     height: 500,
-//   });
-//   chart.data(source);
-//   chart.scale('name', {
-//     type: 'cat',
-//     values: props.codeList,
-//   });
-//   chart.scale('day', {
-//     type: 'cat',
-//     values: props.daylList,
-//   });
-//   chart.scale('sales', {
-//     nice: true,
-//     height: 50,
-//   });
-//
-//   chart.axis('name', {
-//     tickLine: null,
-//     grid: {
-//       alignTick: false,
-//       line: {
-//         style: {
-//           lineWidth: 1,
-//           lineDash: null,
-//           stroke: '#f0f0f0',
-//         },
-//       },
-//     },
-//   });
-//
-//   chart.axis('day', {
-//     title: null,
-//     grid: {
-//       alignTick: false,
-//       line: {
-//         style: {
-//           lineWidth: 1,
-//           lineDash: null,
-//           stroke: '#f0f0f0',
-//         },
-//       },
-//     },
-//   });
-//
-//   chart.tooltip({
-//     showMarkers: false,
-//   });
-//
-//   chart
-//     .polygon()
-//     .position('name*day')
-//     .color('sales', '#BAE7FF-#1890FF-#0050B3')
-//     .label('sales', {
-//       offset: -2,
-//       style: {
-//         fill: '#fff',
-//         shadowBlur: 2,
-//         shadowColor: 'rgba(0, 0, 0, .45)',
-//       },
-//     })
-//     .style({
-//       lineWidth: 1,
-//       stroke: '#fff',
-//     });
-//   chart.interaction('element-active')
-//   return (
-//     chart.render()
-//   )
-//
-//
-// }
+// const CHART = (props) => {
+class CHART extends Component {
+  render() {
+    const {dataList, totalList, codeList, dayList,mv20CodeList,mv20DataList } = this.props
+    console.log(dayList)
+    const chart = new Chart({
+      container: 'container',
+      autoFit: true,
+      height: 500,
+    });
+    chart.data(mv20DataList);
+    chart.scale('name', {
+      type: 'cat',
+      values: codeList,
+    });
+    chart.scale('day', {
+      type: 'cat',
+      values: dayList,
+    });
+    chart.scale('sales', {
+      nice: true,
+      height: 50,
+    });
+
+    chart.axis('name', {
+      tickLine: null,
+      grid: {
+        alignTick: false,
+        line: {
+          style: {
+            lineWidth: 1,
+            lineDash: null,
+            stroke: '#f0f0f0',
+          },
+        },
+      },
+    });
+
+    chart.axis('day', {
+      title: null,
+      grid: {
+        alignTick: false,
+        line: {
+          style: {
+            lineWidth: 1,
+            lineDash: null,
+            stroke: '#f0f0f0',
+          },
+        },
+      },
+    });
+
+    chart.tooltip({
+      showMarkers: false,
+    });
+
+    chart
+      .polygon()
+      .position('name*day')
+      .color('sales', '#BAE7FF-#1890FF-#0050B3')
+      .label('sales', {
+        offset: -2,
+        style: {
+          fill: '#fff',
+          shadowBlur: 2,
+          shadowColor: 'rgba(0, 0, 0, .45)',
+        },
+      })
+      .style({
+        lineWidth: 1,
+        stroke: '#fff',
+      });
+    chart.interaction('element-active')
+    return (
+      chart.render()
+    )
+  }
+}
 
 const SP500UI = (props) => {
   const {Header, Footer} = Layout;
@@ -141,15 +141,17 @@ const SP500UI = (props) => {
       </Header>
       <Row justify="center">
         <Col style={style2} xs={{span: 20}} sm={{span: 20}} md={{span: 20}} lg={{span: 17}} xl={{span: 17}}>
-          {/*<CHART*/}
-          {/*  dataList={props.dataList}*/}
-          {/*  totalList={props.totalList}*/}
-          {/*  daylList={props.dayList}*/}
-          {/*  codeList={props.codeList}*/}
-          {/*/>*/}
+          <CHART
+            dataList={props.dataList}
+            totalList={props.totalList}
+            daylList={props.dayList}
+            codeList={props.codeList}
+            mv20DataList={props.mv20DataList}
+            mv20CodeList={props.mv20CodeList}
+          />
 
-          <Table columns={columns} dataSource={props.dataList} size="middle" pagination={false} responsive="lg">
-          </Table>
+          {/*<Table columns={columns} dataSource={props.dataList} size="middle" pagination={false} responsive="lg">*/}
+          {/*</Table>*/}
         </Col>
         {/*<Col style={style1} xs={{span: 4}} sm={{span: 4}} md={{span: 4}} lg={{span: 4}} xl={{span: 4}}>*/}
 
@@ -171,6 +173,7 @@ const mapState = (state) => {
     totalList: state.getIn(['sp500', 'totalList']),
     codeList: state.getIn(['sp500', 'codeList']),
     dayList: state.getIn(['sp500', 'dayList']),
+    mv20List: state.getIn(['sp500', 'mv20List']),
   }
 };
 

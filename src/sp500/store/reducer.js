@@ -3,9 +3,11 @@ import { fromJS} from 'immutable';
 
 const defaultState = fromJS({
   dataList: [],
-  totaLList: [],
+  totalLList: [],
   dayList: [],
   codeList: [],
+  mv20CodeList: [],
+  mv20DataList: [],
 });
 
 
@@ -23,6 +25,8 @@ const initDataList = (state, action) => {
     totalList: action.totalList,
     dayList:action.dayList,
     codeList:action.codeList,
+    mv20CodeList:action.mv20CodeList,
+    mv20DataList:action.mv20DataList,
   })
 }
 
