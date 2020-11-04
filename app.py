@@ -112,6 +112,11 @@ def quit_browser(br):
 def main():
     logger.info("start... today: {} new: {}".format(utils.today().isoformat(), utils.now().isoformat()))
     utils.init_sentry()
+    if utils.is_market_open():
+        logger.info("not is_market_open. exit. today: {} new: {}".format(utils.today().isoformat(), utils.now().isoformat()))
+        return
+    logger.info("is_market_open. run.. today: {} new: {}".format(utils.today().isoformat(), utils.now().isoformat()))
+
     if not cf.DEBUG:
         time.sleep(20)
     if not utils.check_tradecal():

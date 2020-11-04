@@ -99,11 +99,11 @@ def is_market_open(offset=1):
     open_time = now().replace(hour=9, minute=30, second=0)
     close_time = now().replace(hour=16, minute=30, second=0)
     current = now()
-    if current < open_time:
-        return 2
-    if current >= open_time and current <= close_time:
-        return 1
-    return 0
+    # if current < open_time:
+    #     return 2
+    # if current >= open_time and current <= close_time:
+    #     return 1
+    return current < open_time
 
 
 def is_market_close():
