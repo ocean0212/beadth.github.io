@@ -21,7 +21,7 @@ class SP500 extends Component {
 
   render() {
     const {Header, Footer} = Layout;
-    const {dataList, totalList, codeList, dayList, mv20CodeList, mv20DataList, isLoading} = this.props
+    const {dataList, totalList, codeList, dayList, mv20CodeList, mv20DataList, isLoading} = this.props // eslint-disable-line no-unused-vars
     return (
       <Layout>
         <Header className="header">
@@ -85,12 +85,12 @@ class SP500 extends Component {
 }
 
 
-const SP500UI = (props) => {
+const SP500UI = (props) => { // eslint-disable-line no-unused-vars
   const {Header, Footer} = Layout;
   // const style1 = {background: '#0092ff', padding: '0 0'};
   const style2 = {background: '#FF0000', padding: '0 0'};
 
-  const columns = [
+  const columns = [ // eslint-disable-line no-unused-vars
     {title: 'TIME', dataIndex: 'time',},
     {title: 'SPX', dataIndex: 'SPX',},
     {title: 'COM', dataIndex: 'COM',},
