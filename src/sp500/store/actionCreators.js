@@ -1,6 +1,7 @@
 import axios from "axios"
 import Base64  from 'base-64';
 import * as constants from './constants';
+import {CHART_CODE_LIST} from "../../constants";
 
 export const changeCurrentCity = (city, zoom) => ({
   type: constants.CHANGE_CURRENT_CITY,
@@ -13,37 +14,45 @@ export const InitDataList = (data) => {
   var dayList = [];
   var codeList = [];
   var totalList = [];
-  var mv20CodeList = []
-  var mv20DataList = []
+  var mv20CodeList = [];
+  var mv20DataList = [];
 
-  for (var mv20k in data[0].data){
-    mv20CodeList.push(mv20k)
-  }
 
   for ( var i=0; i<data.length; i++){
     for (var key in data[i].data){
       data[i][key] = data[i].data[key]['close'];
     }
-
     dayList.push(data[i]['time'])
-    totalList.push(data[i]['TOTAL'])
-
-    // var city = data[i].city;
-    // if (city in result){
-    //   result[city].push(data[i])
-    // }else {
-    //   result[city] = [data[i]]
-    // }
-
+    // totalList.push(data[i]['TOTAL'])
   }
 
-  for ( var j=0; j<data.length; j++){
-
-    for ( var n=0;n<mv20CodeList.length; n++){
-      mv20DataList.push([j,n ,data[j][mv20CodeList[n]]],)
-
+  // table code list
+  for (var tk in data[0]){
+    if (tk !== "data"){
+      codeList.push(tk)
     }
   }
+
+  // chart code list
+  for (var ck in data[0].data){
+    mv20CodeList.push(ck)
+  }
+  // mv20CodeList.push("TOTAL")
+
+  // mv20 chart data list
+  for ( var j=0; j<CHART_CODE_LIST.length; j++){
+    for ( var n=0;n<data.length; n++){
+      mv20DataList.push([j,n ,data[n][CHART_CODE_LIST[j]]],)
+    }
+  }
+
+  // total List
+  for (var t=0; t< ['TOTAL'].length; t++){
+    for ( var tn=0;tn<data.length; tn++){
+      totalList.push([t,tn ,data[tn]['TOTAL']],)
+    }
+  }
+  console.log(totalList)
 
   const mv20source = mv20DataList.map((arr) => {
     return {
@@ -53,21 +62,22 @@ export const InitDataList = (data) => {
     };
   });
 
-  // code list
-  for (var k in data[0]){
-    if (k !== "data"){
-      codeList.push(k)
-    }
-  }
+  const mv20TotalSource = totalList.map((arr) => {
+    return {
+      name: arr[0],
+      day: arr[1],
+      sales: arr[2],
+    };
+  });
 
   return {
     type: constants.INIT_DATA_LIST,
     dataList: data,
-    totalList: totalList,
+    totalList: mv20TotalSource,
     dayList: dayList,
     codeList: codeList,
-    mv20CodeList: mv20CodeList,
     mv20DataList: mv20source,
+    isLoading: false,
   }};
 
 
@@ -84,8 +94,7 @@ export const getMtData = () => {
     var url = window.location.href
     axios.get(url + "us/sp500_30.json").then((res) => {
       var data = Base64.decode(res.data.data)
-      console.log(JSON.parse(data).reverse())
-      dispatch(InitDataList(JSON.parse(data).reverse())) // action change store
+      dispatch(InitDataList(JSON.parse(data))) // action change store
       }).catch(() => { // ajax request error
         console.log("error")
     })

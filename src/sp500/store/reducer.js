@@ -1,13 +1,17 @@
 import * as constants from './constants';
 import { fromJS} from 'immutable';
+import {CHART_CODE_LIST} from "../../constants";
 
 const defaultState = fromJS({
   dataList: [],
   totalLList: [],
   dayList: [],
   codeList: [],
-  mv20CodeList: [],
+  mv20CodeList: CHART_CODE_LIST,
   mv20DataList: [],
+  chartList:[],
+  breadthDays: 100,
+  isLoading: true,
 });
 
 
@@ -27,6 +31,7 @@ const initDataList = (state, action) => {
     codeList:action.codeList,
     mv20CodeList:action.mv20CodeList,
     mv20DataList:action.mv20DataList,
+    isLoading:action.isLoading,
   })
 }
 
