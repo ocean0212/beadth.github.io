@@ -44,7 +44,7 @@ class SP500 extends Component {
         </Row>
         <Row justify="center">
 
-          <Col xs={{span: 21}} sm={{span: 21}} md={{span: 18}} lg={{span: 14}} xl={{span: 14}}>
+          <Col xs={{span: 20}} sm={{span: 19}} md={{span: 18}} lg={{span: 14}} xl={{span: 14}}>
             {
               isLoading
                 ? <div>Loading</div>
