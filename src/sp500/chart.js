@@ -39,7 +39,7 @@ class LeftChart extends Component {
       <div>
         <Chart
           scale={scale}
-          height={1000}
+          height={3000}
           data={this.props.data}
           autoFit
           forceFit={true}
@@ -75,7 +75,7 @@ class LeftChart extends Component {
               },
             }}
           />
-          <Legend position='left'/>
+          <Legend position='left-top' offsetY={100}/>
 
           <Tooltip shared showMarkers={false}/>
           <Polygon
@@ -132,7 +132,7 @@ class RightChart extends Component {
       <div>
         <Chart
           scale={scale}
-          height={1000}
+          height={3000}
           data={this.props.data}
           autoFit
           forceFit={true}
@@ -170,7 +170,7 @@ class RightChart extends Component {
             }}
           />
           <Tooltip shared showMarkers={false}/>
-          <Legend position='right'/>
+          <Legend position='right-top' offsetY={100}/>
           <Polygon
             position={'name*day'}
             // color={['sales', '#BAE7FF-#1890FF-#0050B3']}

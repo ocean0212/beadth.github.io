@@ -92,7 +92,7 @@ export const getMtData = () => {
   return (dispatch) => { // dispatch: 如果action是函数的话会自动接收到dispatch方法
     // ajax request
     var url = window.location.href
-    axios.get(url + "us/sp500_30.json").then((res) => {
+    axios.get(url + "us/sp500_100.json").then((res) => {
       var data = Base64.decode(res.data.data)
       dispatch(InitDataList(JSON.parse(data))) // action change store
       }).catch(() => { // ajax request error

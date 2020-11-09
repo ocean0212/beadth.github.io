@@ -44,7 +44,7 @@ class SP500 extends Component {
         </Row>
         <Row justify="center">
 
-          <Col xs={{span: 18}} sm={{span: 18}} md={{span: 18}} lg={{span: 17}} xl={{span: 17}}>
+          <Col xs={{span: 21}} sm={{span: 21}} md={{span: 18}} lg={{span: 14}} xl={{span: 14}}>
             {
               isLoading
                 ? <div>Loading</div>
@@ -55,7 +55,7 @@ class SP500 extends Component {
             {/*<Table columns={columns} dataSource={props.dataList} size="middle" pagination={false} responsive="lg">*/}
             {/*</Table>*/}
           </Col>
-          <Col xs={{span: 3}} sm={{span: 3}} md={{span: 3}} lg={{span: 4}} xl={{span: 4}}>
+          <Col xs={{span: 3}} sm={{span: 3}} md={{span: 2}} lg={{span: 2}} xl={{span: 2}} offset={1}>
             {
               isLoading
                 ? <div>Loading</div>
