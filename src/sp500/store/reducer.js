@@ -12,6 +12,7 @@ const defaultState = fromJS({
   chartList:[],
   breadthDays: 100,
   isLoading: true,
+  lastBreadth: 0,
 });
 
 
@@ -32,6 +33,7 @@ const initDataList = (state, action) => {
     mv20CodeList:action.mv20CodeList,
     mv20DataList:action.mv20DataList,
     isLoading:action.isLoading,
+    lastBreadth:action.lastBreadth,
   })
 }
 

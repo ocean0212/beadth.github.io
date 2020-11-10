@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Row, Col} from 'antd';
 import {connect} from "react-redux"
 
-import {Layout, Menu, Button} from 'antd';
+import {Layout, Statistic, Menu, Button, Space} from 'antd';
 
 import {getMtData,} from "./store/actionCreators";
 import {LeftChart, RightChart} from "./chart";
@@ -21,7 +21,7 @@ class SP500 extends Component {
 
   render() {
     const {Header, Footer} = Layout;
-    const {dataList, totalList, codeList, dayList, mv20CodeList, mv20DataList, isLoading} = this.props // eslint-disable-line no-unused-vars
+    const {dataList, totalList, codeList, dayList, mv20CodeList, mv20DataList, isLoading, lastBreadth} = this.props // eslint-disable-line no-unused-vars
     return (
       <Layout>
         <Header className="header">
@@ -30,17 +30,25 @@ class SP500 extends Component {
           </Menu>
         </Header>
         <Row justify="center" style={{padding: '12px 0'}}>
-          <Col xs={{span: 5, offset: 0}} lg={{span: 5, offset: 1}}>
-            <Button type="primary" onClick={() => {
-              this.props.initData();
-            }}>刷新</Button>
+          <Col xs={{span: 7, offset:1}} sm={{span: 8, offset:5}} md={{span: 10, offset:3}} lg={{span: 6, offset:5}} xl={{span: 6, offset:5}}>
+            {
+              isLoading
+              ? <div>Loading</div>
+              :<Statistic title="Last Breadth Value" value={lastBreadth}/>}
           </Col>
-          <Col xs={{span: 5, offset: 0}} lg={{span: 5, offset: 1}}>
-            <Button danger onClick={() => {
-              window.open(PAYPAL_URL);
-            }}>赞助</Button>
-          </Col>
+          <Col xs={{span: 5, offset:0}} sm={{span: 5, offset:0}} md={{span: 10, offset:0}} lg={{span: 6, offset:0}} xl={{span: 6, offset:0}}>
 
+
+            <Space size={10} direction="vertical">
+              <Button type="primary" onClick={() => {
+                this.props.initData();
+              }}>刷新</Button>
+              <Button danger onClick={() => {
+                window.open(PAYPAL_URL);
+              }}>赞助</Button>
+            </Space>
+
+          </Col>
         </Row>
         <Row justify="center">
 
@@ -71,7 +79,7 @@ class SP500 extends Component {
   }
 
   componentDidMount() {
-    this.props.initData();
+    // this.props.initData();
 
     this.refreshData = setInterval(() => {
       this.props.initData();
@@ -152,6 +160,7 @@ const mapState = (state) => {
     mv20CodeList: state.getIn(['sp500', 'mv20CodeList']),
     mv20DataList: state.getIn(['sp500', 'mv20DataList']),
     isLoading: state.getIn(['sp500', 'isLoading']),
+    lastBreadth: state.getIn(['sp500', 'lastBreadth']),
   }
 };
 

@@ -16,6 +16,7 @@ export const InitDataList = (data) => {
   var totalList = [];
   var mv20CodeList = [];
   var mv20DataList = [];
+  var lastBreadth = 0;
 
 
   for ( var i=0; i<data.length; i++){
@@ -50,9 +51,10 @@ export const InitDataList = (data) => {
   for (var t=0; t< ['TOTAL'].length; t++){
     for ( var tn=0;tn<data.length; tn++){
       totalList.push([t,tn ,data[tn]['TOTAL']],)
+
     }
   }
-  console.log(totalList)
+  lastBreadth = totalList[totalList.length-1][2]
 
   const mv20source = mv20DataList.map((arr) => {
     return {
@@ -61,7 +63,6 @@ export const InitDataList = (data) => {
       sales: arr[2],
     };
   });
-
   const mv20TotalSource = totalList.map((arr) => {
     return {
       name: arr[0],
@@ -78,6 +79,7 @@ export const InitDataList = (data) => {
     codeList: codeList,
     mv20DataList: mv20source,
     isLoading: false,
+    lastBreadth: lastBreadth,
   }};
 
 
@@ -91,8 +93,10 @@ export const changeCurrentZoom = (value) => ({
 export const getMtData = () => {
   return (dispatch) => { // dispatch: 如果action是函数的话会自动接收到dispatch方法
     // ajax request
+    var t = "?t=" + Date.parse(new Date()) / 1000
     var url = window.location.href
-    axios.get(url + "us/sp500_100.json").then((res) => {
+    var header = {'Cache-Control': 'no-cache'}
+    axios.get(url + "us/sp500_100.json" + t, header).then((res) => {
       var data = Base64.decode(res.data.data)
       dispatch(InitDataList(JSON.parse(data))) // action change store
       }).catch(() => { // ajax request error
