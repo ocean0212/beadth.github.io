@@ -45,7 +45,7 @@ class SP500 extends Component {
               }}>刷新</Button>
               <Button danger onClick={() => {
                 window.open(PAYPAL_URL);
-              }}>赞助</Button>
+              }}>支持一下</Button>
             </Space>
 
           </Col>
