@@ -172,6 +172,9 @@ def split_save_json(data, f=None, ft=None, sp=[30,100,360]):
         last_sp = copy.deepcopy(li[-i:])
         for j in last_sp:
             j['TOTAL'] = total_dict(j['data'], 'close')
+            j['LOW_TOTAL'] = total_dict(j['data'], 'low')
+            j['OPEN_TOTAL'] = total_dict(j['data'], 'open')
+            j['HIGH_TOTAL'] = total_dict(j['data'], 'high')
         path = os.path.join(f, ft.format(str(i)))
         fb = open(path, 'w')
         tt = json.dumps(last_sp)
