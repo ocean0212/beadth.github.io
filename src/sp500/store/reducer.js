@@ -1,6 +1,6 @@
 import * as constants from './constants';
 import { fromJS} from 'immutable';
-import {CHART_CODE_LIST} from "../../constants";
+import {CHART_CODE_LIST, IS_LOADING_STRING} from "../../constants";
 
 const defaultState = fromJS({
   dataList: [],
@@ -13,6 +13,7 @@ const defaultState = fromJS({
   breadthDays: 100,
   isLoading: true,
   lastBreadth: 0,
+  lastTime: IS_LOADING_STRING,
 });
 
 
@@ -34,6 +35,7 @@ const initDataList = (state, action) => {
     mv20DataList:action.mv20DataList,
     isLoading:action.isLoading,
     lastBreadth:action.lastBreadth,
+    lastTime:action.lastTime,
   })
 }
 

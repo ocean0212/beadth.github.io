@@ -9,7 +9,8 @@ export const changeCurrentCity = (city, zoom) => ({
   currentZoom: zoom,
 })
 
-export const InitDataList = (data) => {
+export const InitDataList = (srcData) => {
+  console.log(srcData)
   // 数据处理
   var dayList = [];
   var codeList = [];
@@ -17,7 +18,7 @@ export const InitDataList = (data) => {
   var mv20CodeList = [];
   var mv20DataList = [];
   var lastBreadth = 0;
-
+  var data = JSON.parse(Base64.decode(srcData.data))
 
   for ( var i=0; i<data.length; i++){
     for (var key in data[i].data){
@@ -80,6 +81,7 @@ export const InitDataList = (data) => {
     mv20DataList: mv20source,
     isLoading: false,
     lastBreadth: lastBreadth,
+    lastTime: srcData.last_time,
   }};
 
 
@@ -97,8 +99,7 @@ export const getMtData = () => {
     var url = window.location.href
     var header = {'Cache-Control': 'no-cache'}
     axios.get(url + "us/sp500_100.json" + t, header).then((res) => {
-      var data = Base64.decode(res.data.data)
-      dispatch(InitDataList(JSON.parse(data))) // action change store
+      dispatch(InitDataList(res.data)) // action change store
       }).catch(() => { // ajax request error
         console.log("error")
     })

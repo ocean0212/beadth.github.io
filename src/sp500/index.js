@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import {Row, Col} from 'antd';
+import {Row, Col, Tooltip} from 'antd';
 import {connect} from "react-redux"
 
 import {Layout, Statistic, Menu, Button, Space} from 'antd';
 
 import {getMtData,} from "./store/actionCreators";
 import {LeftChart, RightChart} from "./chart";
-import {PAYPAL_URL} from "../constants";
+import {IS_LOADING_STRING, PAYPAL_URL} from "../constants";
 
 
 class SP500 extends Component {
@@ -21,8 +21,9 @@ class SP500 extends Component {
 
   render() {
     const {Header, Footer} = Layout;
-    const {dataList, totalList, codeList, dayList, mv20CodeList, mv20DataList, isLoading, lastBreadth} = this.props // eslint-disable-line no-unused-vars
-    return (
+    const {dataList, totalList, codeList, dayList, mv20CodeList, mv20DataList, isLoading, lastBreadth, lastTime} = this.props // eslint-disable-line no-unused-vars
+    const lastTimeText = "Last Breadth Value : "+lastTime
+      return (
       <Layout>
         <Header className="header">
           <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
@@ -30,32 +31,40 @@ class SP500 extends Component {
           </Menu>
         </Header>
         <Row justify="center" style={{padding: '12px 0'}}>
-          <Col xs={{span: 7, offset:1}} sm={{span: 8, offset:5}} md={{span: 10, offset:3}} lg={{span: 6, offset:5}} xl={{span: 6, offset:5}}>
+          <Col xs={{span: 7, offset: 1}} sm={{span: 8, offset: 5}} md={{span: 10, offset: 3}} lg={{span: 6, offset: 5}}
+               xl={{span: 6, offset: 5}}>
             {
               isLoading
-              ? <div>Loading</div>
-              :<Statistic title="Last Breadth Value" value={lastBreadth}/>}
+                ? <div>{IS_LOADING_STRING}</div>
+                : <Statistic title={lastTimeText} value={lastBreadth}/>}
           </Col>
-          <Col xs={{span: 5, offset:0}} sm={{span: 5, offset:0}} md={{span: 10, offset:0}} lg={{span: 6, offset:0}} xl={{span: 6, offset:0}}>
+          <Col xs={{span: 5, offset: 0}} sm={{span: 5, offset: 0}} md={{span: 10, offset: 0}} lg={{span: 6, offset: 0}}
+               xl={{span: 6, offset: 0}}>
 
 
             <Space size={10} direction="vertical">
-              <Button type="primary" onClick={() => {
-                this.props.initData();
-              }}>刷新</Button>
-              <Button danger onClick={() => {
-                window.open(PAYPAL_URL);
-              }}>支持一下</Button>
+              <Tooltip title="交易时间延迟1-2小时." color='blue' key='blue-text'>
+                <Button type="primary" onClick={() => {
+                  this.props.initData();
+                }}>刷新</Button>
+              </Tooltip>
+
+              <Tooltip title="O(∩_∩)O~" color='red' key='red-text'>
+                <Button danger onClick={() => {
+                  window.open(PAYPAL_URL);
+                }}>支持一下</Button>
+              </Tooltip>
+
             </Space>
 
           </Col>
         </Row>
-        <Row justify="center">
+        <Row justify="center" align="top">
 
-          <Col xs={{span: 20}} sm={{span: 19}} md={{span: 18}} lg={{span: 14}} xl={{span: 14}}>
+          <Col xs={{span: 20}} sm={{span: 19}} md={{span: 18}} lg={{span: 14}} xl={{span: 14}} align="top">
             {
               isLoading
-                ? <div>Loading</div>
+                ? <div>{IS_LOADING_STRING}</div>
                 : <LeftChart data={mv20DataList} days={dayList}/>
 
             }
@@ -63,10 +72,10 @@ class SP500 extends Component {
             {/*<Table columns={columns} dataSource={props.dataList} size="middle" pagination={false} responsive="lg">*/}
             {/*</Table>*/}
           </Col>
-          <Col xs={{span: 3}} sm={{span: 3}} md={{span: 2}} lg={{span: 2}} xl={{span: 2}} offset={1}>
+          <Col xs={{span: 3}} sm={{span: 3}} md={{span: 2}} lg={{span: 2}} xl={{span: 2}} offset={1} align="top">
             {
               isLoading
-                ? <div>Loading</div>
+                ? <div>{IS_LOADING_STRING}</div>
                 : <RightChart data={totalList} days={dayList}/>
 
             }
@@ -161,6 +170,7 @@ const mapState = (state) => {
     mv20DataList: state.getIn(['sp500', 'mv20DataList']),
     isLoading: state.getIn(['sp500', 'isLoading']),
     lastBreadth: state.getIn(['sp500', 'lastBreadth']),
+    lastTime: state.getIn(['sp500', 'lastTime']),
   }
 };
 
