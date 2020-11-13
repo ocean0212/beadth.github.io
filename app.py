@@ -117,8 +117,6 @@ def main():
         return
     logger.info("is_market_open. run.. today: {} new: {}".format(utils.today().isoformat(), utils.now().isoformat()))
 
-    if not cf.DEBUG:
-        time.sleep(20)
     if not utils.check_tradecal():
         return
     run()

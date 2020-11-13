@@ -47,16 +47,27 @@ def set_us_tradecal(days): pass
 @retry(stop_max_attempt_number=3, wait_fixed=90 * 1000)
 @extract_context_info
 def get_ts_us_tradecal():
-    pro = ts.pro_api(config.TOKEN)
-    start_date, end_date = gen_range_mouth()
-    start_date, end_date = start_date.strftime("%Y%m%d"), end_date.strftime("%Y%m%d")
-    logging.info("query ...")
-    df = pro.us_tradecal(start_date=start_date, end_date=end_date)
-    logging.info("res: {}".format(df))
-    d = df.to_dict('records')
-    tradecal_days = [i['cal_date'] for i in d if i['is_open'] == 1]
-    set_us_tradecal(tradecal_days)
-    logging.info('tradecal_days: {}'.format(tradecal_days))
+    path = os.path.join(config.DATA_US_DIR, now().strftime("%Y-%m")+ '.json')
+    if not os.path.isfile(path):
+        f = open(path, 'w')
+        pro = ts.pro_api(config.TOKEN)
+        start_date, end_date = gen_range_mouth()
+        start_date, end_date = start_date.strftime("%Y%m%d"), end_date.strftime("%Y%m%d")
+        logging.info("query ...")
+        df = pro.us_tradecal(start_date=start_date, end_date=end_date)
+        logging.info("res: {}".format(df))
+        d = df.to_dict('records')
+        tradecal_days = [i['cal_date'] for i in d if i['is_open'] == 1]
+        set_us_tradecal(tradecal_days)
+        json.dump(tradecal_days, f)
+        f.flush()
+        f.close()
+        logging.info('tradecal_days: {}'.format(tradecal_days))
+    else:
+        print('yes')
+        f = open(path, 'r')
+        tradecal_days = json.load(f)
+        f.close()
     return tradecal_days
 
 
