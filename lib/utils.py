@@ -50,6 +50,7 @@ def get_ts_us_tradecal():
     path = os.path.join(config.DATA_US_DIR, now().strftime("%Y-%m")+ '.json')
     if not os.path.isfile(path):
         f = open(path, 'w')
+        logging.info('not find json {} file!'.format(path))
         pro = ts.pro_api(config.TOKEN)
         start_date, end_date = gen_range_mouth()
         start_date, end_date = start_date.strftime("%Y%m%d"), end_date.strftime("%Y%m%d")
@@ -64,7 +65,7 @@ def get_ts_us_tradecal():
         f.close()
         logging.info('tradecal_days: {}'.format(tradecal_days))
     else:
-        print('yes')
+        logging.info('find {} file.'.format(path))
         f = open(path, 'r')
         tradecal_days = json.load(f)
         f.close()
