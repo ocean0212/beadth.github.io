@@ -167,6 +167,7 @@ def split_save_json(data, f=None, ft=None, sp=[30,100,360]):
         code=1000,
         encryption="AES",
         data = None,
+        last_time = now().strftime("%Y-%m-%d %H:%M:%S")
     )
     for i in sp:
         last_sp = copy.deepcopy(li[-i:])
