@@ -67,7 +67,7 @@ const LeftChart = (props) => {
         },
       }}
     />
-    <Legend position='left-top' offsetY={100}/>
+    {/*<Legend position='left-top' offsetY={100}/>*/}
 
     <Tooltip shared showMarkers={false}/>
     <Polygon
@@ -148,7 +148,7 @@ const RightChart = (props) => {
       }}
     />
     <Tooltip shared showMarkers={false}/>
-    <Legend position='right-top' offsetY={100}/>
+    {/*<Legend position='right-top' offsetY={100}/>*/}
     <Polygon
       position={'name*day'}
       color={['sales', '#FB5050-#FFFFFF-#009966']}
@@ -191,15 +191,20 @@ const LineChart = (props) => {
     line: null,
   }
 
+  const sliCfg = {
+    smooth: false
+  }
+
   return <div>
     <h5 className='sub-title' style={styles.subTitle}>
       S&P 500 宽度走势
     </h5>
-    <Chart scale={{breadth: {min: 0, max: 1101}}} padding={[10, 20, 50, 40]} autoFit height={220} data={props.data}>
+    <Chart scale={{breadth: {min: 0, max: 1101}}} padding={[10, 20, 30, 40]} autoFit height={220} data={props.data}>
       <Axis name="breadth" grid={grid}/>
+      <Axis name="day" label={null}/>
       <Line shape="line" position="day*breadth" color=""/>
       <Legend visible={false} />
-      {/*<Slider start={0} end={1}/>*/}
+      <Slider start={0.3} end={1} trendCfg={sliCfg}/>
       <Annotation.Line
         start={['min', '200']}
         end={['max', '200']}
@@ -230,7 +235,7 @@ const LineChart = (props) => {
             fill: '#FF4D4F'
           },
           offsetX:-20,
-          offsetY: -20,
+          offsetY: -10,
         }}
       />
 

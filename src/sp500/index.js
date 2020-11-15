@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
-import {Row, Col, Tooltip} from 'antd';
+import {Row, Col, Tooltip, BackTop} from 'antd';
+import { HeartTwoTone, InfoCircleOutlined } from '@ant-design/icons';
 import {connect} from "react-redux"
 
 import {Layout, Statistic, Menu, Button, Space, Alert, Descriptions, message } from 'antd';
 
 import {getMtData,} from "./store/actionCreators";
 import {LeftChart, RightChart, LineChart} from "./chart";
-import {IS_LOADING_STRING, PAYPAL_URL} from "../constants";
+import {IS_LOADING_STRING, PAYPAL_URL, SHOW_SPACE} from "../constants";
 
 
 class SP500 extends Component {
@@ -20,6 +21,16 @@ class SP500 extends Component {
   }
 
   render() {
+    const backTop = {
+      height: 40,
+      width: 30,
+      lineHeight: '40px',
+      borderRadius: 6,
+      backgroundColor: '#1088e9',
+      color: '#fff',
+      textAlign: 'center',
+      fontSize: 15,
+    };
     const {Header, Footer} = Layout;
 
     const {
@@ -44,25 +55,41 @@ class SP500 extends Component {
           </Col>
         </Row>
 
-        <Row gutter={[9, 9]} justify="center" style={{padding: '12px 0'}}>
-          <Col xs={{span: 7, offset: 1}} sm={{span: 7, offset: 1}} md={{span: 10, offset: 1}} lg={{span: 6, offset: 5}}
-               xl={{span: 6, offset: 5}}>
-            {
-              isLoading
-                ? <div>{IS_LOADING_STRING}</div>
-                : <Statistic title="Market Breadth" value={lastBreadth}/>
-            }
+        <Row gutter={[8, 8]} justify="center" style={{padding: '12px 0'}}>
+          <Col xs={{span: 11, offset: 1}} sm={{span: 7, offset: 2}} md={{span: 10, offset: 2}} lg={{span: 7, offset: 1}}
+               xl={{span: 7, offset: 1}}>
 
-            <Descriptions title="">
-              <Descriptions.Item label="最高">{highBreadth}</Descriptions.Item>
-              <Descriptions.Item label="最低">{lowBreadth}</Descriptions.Item>
-              <Descriptions.Item label="开盘">{openBreadth}</Descriptions.Item>
-            </Descriptions>
+              {
+                isLoading
+                  ? <div>{IS_LOADING_STRING}</div>
+                  : <Statistic title="Market Breadth" value={lastBreadth}/>
+              }
+
+              <Descriptions title=" ">
+                <Descriptions.Item label="最高">
+                  <Tooltip title='当日所有子行业"最高"宽度之和，数据很敏感，仅供参考' color='blue' key='blue-text'>
+                    {highBreadth}  {SHOW_SPACE}
+                    <InfoCircleOutlined />
+                  </Tooltip>
+                </Descriptions.Item>
+                <Descriptions.Item label="最低">
+                  <Tooltip title="当日所有子行业最低宽度之和" color='blue' key='blue-text'>
+                    {lowBreadth} {SHOW_SPACE}
+                    <InfoCircleOutlined />
+                  </Tooltip>
+                </Descriptions.Item>
+                <Descriptions.Item label="开盘">
+                  <Tooltip title="当日所有子行业开盘宽度之和" color='blue' key='blue-text'>
+                    {openBreadth} {SHOW_SPACE}
+                    <InfoCircleOutlined />
+                  </Tooltip>
+                </Descriptions.Item>
+              </Descriptions>
           </Col>
-          <Col xs={{span: 7, offset: 0}} sm={{span: 7, offset: 1}} md={{span: 10, offset: 1}} lg={{span: 6, offset: 5}}
-               xl={{span: 6, offset: 5}}>
+          <Col xs={{span: 7, offset: 0}} sm={{span: 7, offset: 0}} md={{span: 10, offset: 1}} lg={{span: 7, offset: 0}}
+               xl={{span: 7, offset: 2}} align="middle">
 
-          <Space size={10} direction="vertical">
+          <Space size={25} direction="vertical">
               <Tooltip title="交易时间延迟1-2小时." color='blue' key='blue-text'>
                 <Button type="primary" onClick={() => {
                   this.props.initData();
@@ -70,11 +97,13 @@ class SP500 extends Component {
                 }}>刷新</Button>
               </Tooltip>
 
-              <Tooltip title="O(∩_∩)O~" color='red' key='red-text'>
-                <Button danger onClick={() => {
-                  window.open(PAYPAL_URL);
-                }}>支持一下</Button>
-              </Tooltip>
+              <Button danger onClick={() => {
+                window.open(PAYPAL_URL);
+              }}>
+                <HeartTwoTone twoToneColor="#eb2f96" />
+                支持一下
+              </Button>
+
 
             </Space>
           </Col>
@@ -111,10 +140,13 @@ class SP500 extends Component {
 
         <Footer style={{textAlign: 'center'}}>
           <Col xs={{span: 24}} sm={{span: 0}} md={{span: 0}} lg={{span: 0}} xl={{span: 0}} align="center">
-            <Alert padding={[0, 0, 0, 0]} width="100%"  message="移动设备横屏查看Market Breadth色块变化图。" type="info" />
+            <Alert padding={[0, 0, 0, 0]} width="100%"  message="横屏查看Market Breadth色块变化图。" type="info" />
           </Col>
           Market Breadth ©2020 Created by  <a href="https://breadth.app">breadth.app</a>
         </Footer>
+        <BackTop>
+          <div style={backTop}>↑</div>
+        </BackTop>
       </Layout>
     )
   }
