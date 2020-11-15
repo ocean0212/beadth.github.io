@@ -188,7 +188,7 @@ const LineChart = (props) => {
     <h5 className='sub-title' style={styles.subTitle}>
       S&P 500 总宽度走势
     </h5>
-    <Chart scale={{breadth: {min: 0}}} padding={[10, 20, 50, 40]} autoFit height={300} data={props.data}>
+    <Chart scale={{breadth: {min: 0}}} padding={[10, 20, 50, 40]} autoFit height={220} data={props.data}>
 
       <Line shape="line" position="day*breadth" color=""/>
       <Point position="day*breadth" color=""/>
