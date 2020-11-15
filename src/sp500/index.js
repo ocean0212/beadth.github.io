@@ -110,7 +110,9 @@ class SP500 extends Component {
         </Row>
 
         <Footer style={{textAlign: 'center'}}>
-          <Alert padding={[0, 0, 0, 0]} width="100%"  message="移动设备横屏查看Market Breadth色块变化图。" type="info" />
+          <Col xs={{span: 24}} sm={{span: 0}} md={{span: 0}} lg={{span: 0}} xl={{span: 0}} align="center">
+            <Alert padding={[0, 0, 0, 0]} width="100%"  message="移动设备横屏查看Market Breadth色块变化图。" type="info" />
+          </Col>
           Market Breadth ©2020 Created by  <a href="https://breadth.app">breadth.app</a>
         </Footer>
       </Layout>
