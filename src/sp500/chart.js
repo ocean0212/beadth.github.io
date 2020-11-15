@@ -8,6 +8,8 @@ import {
   Polygon,
   Line,
   Point,
+  Annotation,
+  Slider,
 } from 'bizcharts';
 
 
@@ -171,28 +173,87 @@ const RightChart = (props) => {
 }
 
 const LineChart = (props) => {
-  const styles ={
-    mainTitle:{
-      fontSize:20,
-      color:"black",
-      textAlign:"center"
+  const styles = {
+    mainTitle: {
+      fontSize: 20,
+      color: "black",
+      textAlign: "center"
     },
-    subTitle:{
-      fontSize:16,
-      color:"gray",
-      textAlign:"center"
+    subTitle: {
+      fontSize: 16,
+      color: "gray",
+      textAlign: "center"
     }
+  }
+
+  //可配置样式
+  const grid = {
+    align: 'center', // 网格顶点从两个刻度中间开始
+    line: null,
   }
 
   return <div>
     <h5 className='sub-title' style={styles.subTitle}>
-      S&P 500 总宽度走势
+      S&P 500 宽度走势
     </h5>
-    <Chart scale={{breadth: {min: 0}}} padding={[10, 20, 50, 40]} autoFit height={220} data={props.data}>
-
+    <Chart scale={{breadth: {min: 0, max: 1101}}} padding={[10, 20, 50, 40]} autoFit height={220} data={props.data}>
+      <Axis name="breadth" grid={grid}/>
       <Line shape="line" position="day*breadth" color=""/>
-      <Point position="day*breadth" color=""/>
-      <Tooltip shared={false} showCrosshairs/>
+      <Legend visible={false} />
+      <Slider start={0} end={1}/>
+      <Annotation.Line
+        start={['min', '200']}
+        end={['max', '200']}
+        text={{
+          /** 文本位置，除了制定 'start', 'center' 和 'end' 外，还可以使用百分比进行定位， 比如 '30%' */
+          position: 'end',
+          /** 是否自动旋转 */
+          /** 显示的文本内容 */
+          content: '狩猎区',
+          style: {
+            fill: '#FF4D4F'
+          },
+          offsetX: -20,
+          offsetY: 20,
+        }}
+      />
+
+      <Annotation.Line
+        start={['min', '949']}
+        end={['max', '949']}
+        text={{
+          /** 文本位置，除了制定 'start', 'center' 和 'end' 外，还可以使用百分比进行定位， 比如 '30%' */
+          position: 'end',
+          /** 是否自动旋转 */
+          /** 显示的文本内容 */
+          content: '走货区',
+          style: {
+            fill: '#FF4D4F'
+          },
+          offsetX:-20,
+          offsetY: -20,
+        }}
+      />
+
+
+        <Point
+          position="day*breadth"
+          shape={['breadth', (breadth) => {
+            if (breadth < 201) {
+              return 'triangle';
+            }
+            if (breadth > 949) {
+              return 'triangle-down';
+            }
+            return '0'
+          }]}
+          color={['breadth', (breadth) => {
+            if (breadth < 201 || breadth > 949) {
+              return '#FB5050';
+            }
+            return '';
+          }]}/>
+
     </Chart>
   </div>
 }

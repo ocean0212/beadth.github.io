@@ -25,7 +25,6 @@ export const InitDataList = (srcData) => {
       if (data[i].data[key]['close'] === 0.01 ){
         data[i].data[key]['close'] = 0
       }
-      console.log(data[i].data[key]['close'], Math.ceil(data[i].data[key]['close']))
       data[i].data[key]['close'] = Math.ceil(data[i].data[key]['close'])
       data[i][key] = data[i].data[key]['close'];
 
