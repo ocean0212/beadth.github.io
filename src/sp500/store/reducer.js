@@ -35,7 +35,12 @@ const initDataList = (state, action) => {
     mv20DataList:action.mv20DataList,
     isLoading:action.isLoading,
     lastBreadth:action.lastBreadth,
+    highBreadth: action.highBreadth,
+    lowBreadth: action.lowBreadth,
+    openBreadth: action.openBreadth,
     lastTime:action.lastTime,
+    lineDataList:action.lineDataList,
+    breadthChartHigh:action.breadthChartHigh,
   })
 }
 

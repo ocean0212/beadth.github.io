@@ -10,20 +10,28 @@ export const changeCurrentCity = (city, zoom) => ({
 })
 
 export const InitDataList = (srcData) => {
-  console.log(srcData)
   // 数据处理
   var dayList = [];
   var codeList = [];
   var totalList = [];
   var mv20CodeList = [];
   var mv20DataList = [];
-  var lastBreadth = 0;
+  var lineDataList = [];
+  var openBreadth, highBreadth, lowBreadth, lastBreadth = 0
   var data = JSON.parse(Base64.decode(srcData.data))
 
   for ( var i=0; i<data.length; i++){
     for (var key in data[i].data){
+      if (data[i].data[key]['close'] === 0.01 ){
+        data[i].data[key]['close'] = 0
+      }
+      data[i].data[key]['close'] = Math.floor(data[i].data[key]['close'])
       data[i][key] = data[i].data[key]['close'];
+
+      // line Data List
+      // lineDataList.push({day:data[i]['time'], code: key, breadth:data[i].data[key]['close']})
     }
+    lineDataList.push({day:data[i]['time'], code: "TOTAL", breadth:Math.floor(data[i]['TOTAL'])})
     dayList.push(data[i]['time'])
     // totalList.push(data[i]['TOTAL'])
   }
@@ -51,11 +59,14 @@ export const InitDataList = (srcData) => {
   // total List
   for (var t=0; t< ['TOTAL'].length; t++){
     for ( var tn=0;tn<data.length; tn++){
-      totalList.push([t,tn ,data[tn]['TOTAL']],)
+      totalList.push([t,tn ,Math.floor(data[tn]['TOTAL'])],)
 
     }
   }
   lastBreadth = totalList[totalList.length-1][2]
+  highBreadth = Math.floor(data[dayList.length-1]['HIGH_TOTAL'])
+  lowBreadth = Math.floor(data[dayList.length-1]['LOW_TOTAL'])
+  openBreadth = Math.floor(data[dayList.length-1]['OPEN_TOTAL'])
 
   const mv20source = mv20DataList.map((arr) => {
     return {
@@ -82,8 +93,11 @@ export const InitDataList = (srcData) => {
     isLoading: false,
     lastBreadth: lastBreadth,
     lastTime: srcData.last_time,
+    lineDataList: lineDataList,
+    highBreadth: highBreadth,
+    lowBreadth: lowBreadth,
+    openBreadth: openBreadth,
   }};
-
 
 
 export const changeCurrentZoom = (value) => ({
