@@ -195,11 +195,23 @@ const LineChart = (props) => {
     smooth: false
   }
 
+  const copyright = {
+    position: ['median', 'max'],
+    top: false,
+    content:"breadth.app",
+    offsetX: -50,
+    style: {
+      fill: "#C0C0C0",
+      fontSize: 16,
+    },
+  }
+
   return <div>
     <h5 className='sub-title' style={styles.subTitle}>
       S&P 500 宽度走势
     </h5>
-    <Chart scale={{breadth: {min: 0, max: 1101}}} padding={[10, 20, 30, 40]} autoFit height={220} data={props.data}>
+    <Chart scale={{breadth: {min: 0, max: 1101}}} padding={[10, 20, 38, 40]} autoFit height={220} data={props.data}>
+      <Annotation.Text {...copyright}/>
       <Axis name="breadth" grid={grid}/>
       <Axis name="day" label={null}/>
       <Line shape="line" position="day*breadth" color=""/>
@@ -238,7 +250,6 @@ const LineChart = (props) => {
           offsetY: -10,
         }}
       />
-
 
         <Point
           position="day*breadth"
