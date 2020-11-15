@@ -93,7 +93,6 @@ const LeftChart = (props) => {
   </Chart>
 }
 
-
 const RightChart = (props) => {
   const scale = {
     name: {
@@ -200,7 +199,7 @@ const LineChart = (props) => {
       <Axis name="breadth" grid={grid}/>
       <Line shape="line" position="day*breadth" color=""/>
       <Legend visible={false} />
-      <Slider start={0} end={1}/>
+      {/*<Slider start={0} end={1}/>*/}
       <Annotation.Line
         start={['min', '200']}
         end={['max', '200']}

@@ -29,7 +29,7 @@ class SP500 extends Component {
       highBreadth, lowBreadth, openBreadth, // eslint-disable-line no-unused-vars
     } = this.props // eslint-disable-line no-unused-vars
 
-    const lastTimeText = "最后更新时间: " + lastTime
+    const lastTimeText = "最后更新时间(美东): " + lastTime
 
     return (
       <Layout>
@@ -108,7 +108,11 @@ class SP500 extends Component {
             }
           </Col>
         </Row>
-        <Footer style={{textAlign: 'center'}}>Market Breadth ©2020 Created by breadth.app</Footer>
+
+        <Footer style={{textAlign: 'center'}}>
+          <Alert padding={[0, 0, 0, 0]} width="100%"  message="移动设备横屏查看Market Breadth色块变化图。" type="info" />
+          Market Breadth ©2020 Created by  <a href="https://breadth.app">breadth.app</a>
+        </Footer>
       </Layout>
     )
   }
