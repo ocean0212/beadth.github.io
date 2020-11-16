@@ -20,10 +20,8 @@ export const InitDataList = (srcData) => {
   var openBreadth, highBreadth, lowBreadth, lastBreadth = 0
   var data = JSON.parse(Base64.decode(srcData.data))
   var breadthDateRange = [
-    '(',
     data[0]['time'].replace(/-/g,"/"),
     ' - ', data[data.length - 1]['time'].replace(/-/g,"/"),
-    ')',
   ].join('');
 
   for (var i = 0; i < data.length; i++) {

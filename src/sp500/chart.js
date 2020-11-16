@@ -11,6 +11,7 @@ import {
   Annotation,
   Slider,
 } from 'bizcharts';
+import {DOMAIN_NAME} from "../constants";
 
 
 const LeftChart = (props) => {
@@ -174,12 +175,12 @@ const RightChart = (props) => {
 const LineChart = (props) => {
   const styles = {
     mainTitle: {
-      fontSize: 20,
+      fontSize: 16,
       color: "black",
       textAlign: "center"
     },
     subTitle: {
-      fontSize: 16,
+      fontSize: 14,
       color: "gray",
       textAlign: "center"
     }
@@ -198,7 +199,7 @@ const LineChart = (props) => {
   const copyright = {
     position: ['median', 'max'],
     top: false,
-    content:"breadth.app",
+    content: DOMAIN_NAME,
     offsetX: -50,
     style: {
       fill: "#C0C0C0",
@@ -206,50 +207,54 @@ const LineChart = (props) => {
     },
   }
 
-  return <div>
-    <h5 className='sub-title' style={styles.subTitle}>
-      S&P 500 宽度走势 {props.date}
-    </h5>
-    <Chart scale={{breadth: {min: 0, max: 1101}}} padding={[10, 20, 38, 40]} autoFit height={220} data={props.data}>
-      <Annotation.Text {...copyright}/>
-      <Axis name="breadth" grid={grid}/>
-      <Axis name="day" label={null}/>
-      <Line shape="line" position="day*breadth" color=""/>
-      <Legend visible={false} />
-      <Slider start={0.3} end={1} trendCfg={sliCfg}/>
-      <Annotation.Line
-        start={['min', '200']}
-        end={['max', '200']}
-        text={{
-          /** 文本位置，除了制定 'start', 'center' 和 'end' 外，还可以使用百分比进行定位， 比如 '30%' */
-          position: 'end',
-          /** 是否自动旋转 */
-          /** 显示的文本内容 */
-          content: '狩猎区',
-          style: {
-            fill: '#FF4D4F'
-          },
-          offsetX: -20,
-          offsetY: 20,
-        }}
-      />
+  return (
+    <div>
+      <h4 className='main-title' style={styles.mainTitle}>
+        S&P 500 宽度走势
+      </h4>
+      <h5 className='sub-title' style={styles.subTitle}>
+        {props.date}
+      </h5>
+      <Chart scale={{breadth: {min: 0, max: 1000}}} padding={[10, 20, 38, 40]} autoFit height={220} data={props.data}>
+        <Annotation.Text {...copyright}/>
+        <Axis name="breadth" grid={grid}/>
+        <Axis name="day" label={null}/>
+        <Line shape="line" position="day*breadth" color=""/>
+        <Legend visible={false}/>
+        <Slider start={0.3} end={1} trendCfg={sliCfg}/>
+        <Annotation.Line
+          start={['min', '200']}
+          end={['max', '200']}
+          text={{
+            /** 文本位置，除了制定 'start', 'center' 和 'end' 外，还可以使用百分比进行定位， 比如 '30%' */
+            position: 'end',
+            /** 是否自动旋转 */
+            /** 显示的文本内容 */
+            content: '狩猎区',
+            style: {
+              fill: '#FF4D4F'
+            },
+            offsetX: -20,
+            offsetY: 20,
+          }}
+        />
 
-      <Annotation.Line
-        start={['min', '949']}
-        end={['max', '949']}
-        text={{
-          /** 文本位置，除了制定 'start', 'center' 和 'end' 外，还可以使用百分比进行定位， 比如 '30%' */
-          position: 'end',
-          /** 是否自动旋转 */
-          /** 显示的文本内容 */
-          content: '走货区',
-          style: {
-            fill: '#FF4D4F'
-          },
-          offsetX:-20,
-          offsetY: -10,
-        }}
-      />
+        <Annotation.Line
+          start={['min', '949']}
+          end={['max', '949']}
+          text={{
+            /** 文本位置，除了制定 'start', 'center' 和 'end' 外，还可以使用百分比进行定位， 比如 '30%' */
+            position: 'end',
+            /** 是否自动旋转 */
+            /** 显示的文本内容 */
+            content: '走货区',
+            style: {
+              fill: '#FF4D4F'
+            },
+            offsetX: -20,
+            offsetY: -5,
+          }}
+        />
 
         <Point
           position="day*breadth"
@@ -269,8 +274,8 @@ const LineChart = (props) => {
             return '';
           }]}/>
 
-    </Chart>
-  </div>
+      </Chart>
+    </div>)
 }
 
 
