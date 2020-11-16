@@ -67,7 +67,7 @@ const LeftChart = (props) => {
         },
       }}
     />
-    {/*<Legend position='left-top' offsetY={100}/>*/}
+    <Legend position='left-top' offsetY={100} visible={false}/>
 
     <Tooltip shared showMarkers={false}/>
     <Polygon
@@ -148,7 +148,7 @@ const RightChart = (props) => {
       }}
     />
     <Tooltip shared showMarkers={false}/>
-    {/*<Legend position='right-top' offsetY={100}/>*/}
+    <Legend position='right-top' offsetY={100} visible={false}/>
     <Polygon
       position={'name*day'}
       color={['sales', '#FB5050-#FFFFFF-#009966']}
