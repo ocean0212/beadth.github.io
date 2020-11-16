@@ -47,6 +47,7 @@ class SP500 extends Component {
         <Header className="header">
           <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
             <Menu.Item key="1">Market Breadth</Menu.Item>
+            <Menu.Item key="2">功能开发中..</Menu.Item>
           </Menu>
         </Header>
         <Row justify="center" align="top">
