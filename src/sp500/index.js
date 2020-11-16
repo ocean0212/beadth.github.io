@@ -50,7 +50,7 @@ const Bottom = (props) => {
 }
 
 const GAlertMessage = (props) => {
-  const lastTimeText = "最后更新时间(美东): " + props.lastTime
+  const lastTimeText = "交易日市场数据每1-2小时更新一次 | 数据更新最后更新时间(美东): " + props.lastTime
 
   return (
     <Row justify="center" align="top">
