@@ -208,7 +208,7 @@ const LineChart = (props) => {
 
   return <div>
     <h5 className='sub-title' style={styles.subTitle}>
-      S&P 500 宽度走势
+      S&P 500 宽度走势 {props.date}
     </h5>
     <Chart scale={{breadth: {min: 0, max: 1101}}} padding={[10, 20, 38, 40]} autoFit height={220} data={props.data}>
       <Annotation.Text {...copyright}/>

@@ -14,6 +14,7 @@ const defaultState = fromJS({
   isLoading: true,
   lastBreadth: 0,
   lastTime: IS_LOADING_STRING,
+  BREADTH_DATE_RANGE: [],
 });
 
 
@@ -41,6 +42,7 @@ const initDataList = (state, action) => {
     lastTime:action.lastTime,
     lineDataList:action.lineDataList,
     breadthChartHigh:action.breadthChartHigh,
+    breadthDateRange:action.breadthDateRange,
   })
 }
 

@@ -37,7 +37,7 @@ class SP500 extends Component {
       dataList, totalList, codeList, dayList, // eslint-disable-line no-unused-vars
       mv20CodeList, mv20DataList, lineDataList, // eslint-disable-line no-unused-vars
       isLoading, lastBreadth, lastTime, // eslint-disable-line no-unused-vars
-      highBreadth, lowBreadth, openBreadth, // eslint-disable-line no-unused-vars
+      highBreadth, lowBreadth, openBreadth, breadthDateRange, // eslint-disable-line no-unused-vars
     } = this.props // eslint-disable-line no-unused-vars
 
     const lastTimeText = "最后更新时间(美东): " + lastTime
@@ -114,7 +114,7 @@ class SP500 extends Component {
             {
               isLoading
                 ? <div>{IS_LOADING_STRING}</div>
-                : <LineChart data={lineDataList}/>
+                : <LineChart data={lineDataList} date={breadthDateRange}/>
             }
           </Col>
         </Row>
@@ -182,6 +182,7 @@ const mapState = (state) => {
     lastTime: state.getIn(['sp500', 'lastTime']),
     lineDataList: state.getIn(['sp500', 'lineDataList']),
     breadthChartHigh: state.getIn(['sp500', 'breadthChartHigh']),
+    breadthDateRange: state.getIn(['sp500', 'breadthDateRange']),
   }
 };
 
