@@ -3,11 +3,14 @@ import {Row, Col, Tooltip, BackTop} from 'antd';
 import {HeartTwoTone, InfoCircleOutlined} from '@ant-design/icons';
 import {connect} from "react-redux"
 
-import {Layout, Statistic, Menu, Button, Space, Alert, Descriptions, message} from 'antd';
+import {Layout, Statistic, Menu, Button, Space, Alert, Descriptions, message, List, Card} from 'antd';
+import { Collapse } from 'antd';
 
 import {getMtData,} from "./store/actionCreators";
 import {LeftChart, RightChart, LineChart} from "./chart";
-import {DOMAIN_NAME_URL, IS_LOADING_STRING, PAYPAL_URL, SHOW_SPACE} from "../constants";
+import {DOMAIN_NAME_URL, IS_LOADING_STRING, PAYPAL_URL, SHOW_SPACE, SP500_SUB_CODE_CN} from "../constants";
+
+const { Panel } = Collapse;
 
 const Top = (props) => {
   const {Header} = Layout;
@@ -72,6 +75,7 @@ class SP500 extends Component {
   }
 
   render() {
+
 
     const {
       dataList, totalList, codeList, dayList, // eslint-disable-line no-unused-vars
@@ -152,7 +156,36 @@ class SP500 extends Component {
 
         <Row justify="center" align="top">
 
-          <Col xs={{span: 0}} sm={{span: 19}} md={{span: 18}} lg={{span: 14}} xl={{span: 14}} align="top">
+          <Col xs={{span: 0}} sm={{span: 21}} md={{span: 20}} lg={{span: 17}} xl={{span: 17}} align="top">
+            <Collapse  bordered={false}>
+              <Panel header="各子行业中英文对照" key="1">
+                <List
+                  grid={{
+                    gutter: 16,
+                    xs: 1,
+                    sm: 2,
+                    md: 4,
+                    lg: 4,
+                    xl: 6,
+                    xxl: 6,
+                  }}
+                  dataSource={SP500_SUB_CODE_CN}
+                  renderItem={item => (
+                    <List.Item>
+                      <Card title={""}>
+                        <Tooltip title={item.desc}>
+                          <span>{item.code}</span>
+                        </Tooltip>
+                      </Card>
+                    </List.Item>
+                  )}
+                />
+              </Panel>
+            </Collapse>,
+
+          </Col>
+
+          <Col xs={{span: 0}} sm={{span: 19}} md={{span: 18}} lg={{span: 14}} xl={{span: 14}} >
             {
               isLoading
                 ? <div>{IS_LOADING_STRING}</div>
