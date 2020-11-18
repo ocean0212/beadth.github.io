@@ -158,7 +158,7 @@ class SP500 extends Component {
 
           <Col xs={{span: 0}} sm={{span: 21}} md={{span: 20}} lg={{span: 17}} xl={{span: 17}} align="top">
             <Collapse  bordered={false}>
-              <Panel header="各子行业中英文对照" key="1">
+              <Panel header="各代码中英文对照" key="1">
                 <List
                   grid={{
                     gutter: 16,
@@ -181,8 +181,7 @@ class SP500 extends Component {
                   )}
                 />
               </Panel>
-            </Collapse>,
-
+            </Collapse>
           </Col>
 
           <Col xs={{span: 0}} sm={{span: 19}} md={{span: 18}} lg={{span: 14}} xl={{span: 14}} >
