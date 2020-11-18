@@ -156,7 +156,7 @@ class SP500 extends Component {
 
         <Row justify="center" align="top">
 
-          <Col xs={{span: 0}} sm={{span: 21}} md={{span: 20}} lg={{span: 17}} xl={{span: 17}} align="top">
+          <Col xs={{span: 0}} sm={{span: 21}} md={{span: 20}} lg={{span: 17}} xl={{span: 17}} align="top" style={{padding: '2px 0 10px'}}>
             <Collapse  bordered={false}>
               <Panel header="各代码中英文对照" key="1">
                 <List
