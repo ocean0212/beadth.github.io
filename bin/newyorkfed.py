@@ -1,0 +1,95 @@
+import json
+import urllib3
+import os
+import requests
+from datetime import date
+from dateutil.relativedelta import relativedelta
+from retrying import retry
+
+import config as cf
+from lib import utils
+from app import logger
+
+
+urllib3.disable_warnings()
+
+URL = "https://markets.newyorkfed.org/read?productCode=30&startDt={}&endDt={}&query=summary&format=json"
+
+def header():
+    return {'Accept': '*/*',
+            'Accept-Encoding': 'gzip, deflate, sdch',
+            'Accept-Language': 'en-US,en;q=0.8',
+            'Cache-Control': 'max-age=0',
+            'User-Agent': "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36",
+            }
+
+def get(url):
+    rep = requests.get(url, verify=False, headers=header())
+    return rep
+
+def day_range():
+    start = date.today() - relativedelta(days=3)
+    end = date.today() + relativedelta(days=1)
+    return start, end
+
+
+def bin():
+    start,end = day_range()
+    url = URL.format(start, end)
+
+    rep = get(url)
+    logger.info("NEWYORKFED: code:{} data: {}".format(rep.status_code, rep.text))
+    if rep.status_code != 200: return
+    rep_data = rep.json()
+    summary = rep_data['soma']['summary']
+
+    if len(summary) == 0:
+        return
+    tf = open(cf.NEWYORKFED_SRC_DATA, 'r')
+    ALL_DICT = json.load(tf)
+    tf.close()
+
+    for i in summary:
+
+        as_of_date = i['asOfDate']
+        if as_of_date in ALL_DICT:
+            logger.warning("NEWYORKFED: {} is alert.".format(as_of_date))
+            continue
+        ALL_DICT[as_of_date] = i
+    # save src data
+    fb = open(cf.NEWYORKFED_SRC_DATA, 'w')
+    json.dump(ALL_DICT, fb)
+    fb.flush()
+    fb.close()
+    # save output data
+    newyorkfed_file = os.path.join(cf.OUTPUT, 'newyorkfed.json')
+    utils.save_ouput(ALL_DICT, newyorkfed_file)
+    return ALL_DICT
+
+
+
+if __name__ == '__main__':
+    bin()
+
+#
+# r = {}
+#
+# for i in range(906):
+#     with open("../summary/{}.json".format(i), 'r') as f:
+#         data = json.load(f)
+#         # print(type(data), len(data), data)
+#         # print(len(data['soma']['summary']), data['soma'])
+#         # print(data['soma']['summary'])
+#         if len(data['soma']['summary']) > 1:
+#             print(i)
+#         summary = data['soma']['summary']
+#         item = summary[0]
+#         time = item.get('asOfDate')
+#         r[time] = item
+#
+# from pprint import pprint as pt
+#
+# pt(r)
+#
+# with open('../data/us/newyorkfed.json', 'w') as ff:
+#     json.dump(r, ff)

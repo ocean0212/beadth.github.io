@@ -11,6 +11,7 @@ DEBUG = int(os.getenv("DEBUG", 0))
 DATA_DIR = os.path.join(BASE_DIR, 'data')
 DATA_US_DIR = os.path.join(BASE_DIR, 'data', 'us')
 OUTPUT = os.path.join(BASE_DIR, os.getenv("OUTPUT", 'output'))
+NEWYORKFED_SRC_DATA = os.path.join(DATA_US_DIR, 'newyorkfed.json')
 
 
 

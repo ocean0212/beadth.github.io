@@ -179,14 +179,22 @@ def sort_data(data):
     last_data = sorted(res, key=lambda i: datetime.datetime.strptime(i['time'], "%Y-%m-%d"), reverse=False)
     return last_data
 
-def split_save_json(data, f=None, ft=None, sp=[30,100,360]):
-    li = sort_data(data)
+def save_ouput(data, file_name):
+    json_data = json.dumps(data)
     tmp = dict(
         code=1000,
         encryption="AES",
-        data = None,
+        data = str(base64.b64encode(json_data.encode("utf-8")), encoding='utf-8'),
         last_time = now().strftime("%Y-%m-%d %H:%M:%S")
     )
+    f = open(file_name, 'w')
+    json.dump(tmp, f)
+    f.flush()
+    f.close()
+    return
+
+def split_save_json(data, f=None, ft=None, sp=[30,100,360]):
+    li = sort_data(data)
     for i in sp:
         last_sp = copy.deepcopy(li[-i:])
         for j in last_sp:
@@ -195,12 +203,7 @@ def split_save_json(data, f=None, ft=None, sp=[30,100,360]):
             j['OPEN_TOTAL'] = total_dict(j['data'], 'open')
             j['HIGH_TOTAL'] = total_dict(j['data'], 'high')
         path = os.path.join(f, ft.format(str(i)))
-        fb = open(path, 'w')
-        tt = json.dumps(last_sp)
-        tmp['data'] = str(base64.b64encode(tt.encode("utf-8")), encoding='utf-8')
-        json.dump(tmp, fb)
-        fb.flush()
-        fb.close()
+        save_ouput(last_sp, path)
 
 def day_trading_save(data):
     data = sort_data(data)

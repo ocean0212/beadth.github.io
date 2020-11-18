@@ -7,6 +7,7 @@ from collections import namedtuple
 import config as cf
 from lib import utils
 from lib.browser import *
+from bin import newyorkfed
 
 logger = logging.getLogger(__name__)
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -128,9 +129,11 @@ def run():
         try:
             path = os.path.join(cf.DATA_US_DIR,'sp500_all.json')
             all = utils.read_json_file(path)
+            # market breadth
             br = browser()
             start(br)
             loading_page(br)
+
             current = save_last(br)
             all[current['time']] = current['data']
             utils.save_to_json(path, all)
@@ -138,6 +141,8 @@ def run():
             utils.save_to_json(output, all)
             # utils.day_trading_save(all)
             utils.split_save_json(all, cf.OUTPUT, 'sp500_{}.json')
+            # newyorkfed.org
+            newyorkfed.bin()
             quit_browser(br)
             return 
         except Exception as e :
