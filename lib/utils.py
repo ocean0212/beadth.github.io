@@ -37,9 +37,15 @@ def check_tradecal():
         return  True
     t = today().strftime("%Y%m%d")
     if t in get_ts_us_tradecal():
+        check_day_json()
         return True
     return False
 
+
+def check_day_json():
+    day_path = os.path.join(config.OUTPUT, now().strftime("%Y-%m-%d")+ '.json')
+    if not os.path.isfile(day_path):
+        os.mknod(day_path)
 
 def set_us_tradecal(days): pass
 
@@ -195,6 +201,37 @@ def split_save_json(data, f=None, ft=None, sp=[30,100,360]):
         json.dump(tmp, fb)
         fb.flush()
         fb.close()
+
+def day_trading_save(data):
+    data = sort_data(data)
+    tmp = dict(
+        code=1000,
+        encryption="AES",
+        data = None,
+        last_time = now().strftime("%Y-%m-%d %H:%M:%S")
+    )
+    day_path = os.path.join(config.OUTPUT, now().strftime("%Y-%m-%d")+ '.json')
+    last_tead_path = os.path.join(config.OUTPUT,'last_tead_day.json')
+    day_file = open(day_path, 'r+')
+    last_tead_file = open(last_tead_path, 'r+')
+    try:
+        day_data = json.load(day_file)
+        last_data = json.load(last_tead_file)
+    except Exception:
+        last_data = []
+
+    last_data.append(data[-1])
+    json_data = json.dumps(last_data)
+    tmp['data'] = str(base64.b64encode(json_data.encode("utf-8")), encoding='utf-8')
+
+    json.dump(tmp, day_file)
+    json.dump(tmp, last_tead_file)
+
+    last_tead_file.flush()
+    last_tead_file.close()
+    day_file.flush()
+    day_file.close()
+
 
 def total_dict(data, data_key):
     num = Decimal(0.00)

@@ -136,6 +136,7 @@ def run():
             utils.save_to_json(path, all)
             output = os.path.join(cf.OUTPUT, 'sp500_all.json')
             utils.save_to_json(output, all)
+            utils.day_trading_save(all)
             utils.split_save_json(all, cf.OUTPUT, 'sp500_{}.json')
             quit_browser(br)
             return 
