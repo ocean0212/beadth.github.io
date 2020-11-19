@@ -3,9 +3,9 @@ name: deploy gh-pages
 on:
   workflow_dispatch:
 
-#  push:
-#    branches:
-#      - site
+  push:
+    branches:
+      - site
 
 env:
   BRANCH: gh-pages 
