@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Row, Col, Tooltip, BackTop} from 'antd';
-import {HeartTwoTone, InfoCircleOutlined} from '@ant-design/icons';
+import {HeartTwoTone, InfoCircleOutlined} from '@ant-design/icons'; // eslint-disable-line no-unused-vars
 import {connect} from "react-redux"
 
 import {Layout, Statistic, Menu, Button, Space, Alert, Descriptions, message, List, Card} from 'antd';
@@ -8,7 +8,7 @@ import { Collapse, Tabs } from 'antd';
 
 import {getMtData,} from "./store/actionCreators";
 import {LeftChart, RightChart, LineChart} from "./chart";
-import {DOMAIN_NAME_URL, IS_LOADING_STRING, PAYPAL_URL, SHOW_SPACE, SP500_SUB_CODE_CN} from "../constants";
+import {DOMAIN_NAME_URL, IS_LOADING_STRING, PAYPAL_URL, SHOW_SPACE, SP500_SUB_CODE_CN} from "../constants"; // eslint-disable-line no-unused-vars
 
 const { Panel } = Collapse;
 const { TabPane } = Tabs;
@@ -54,7 +54,7 @@ const Bottom = (props) => {
 }
 
 const GAlertMessage = (props) => {
-  const lastTimeText = "交易日市场数据每1-2小时更新一次 | 数据更新最后更新时间(美东): " + props.lastTime
+  const lastTimeText = "交易日市场数据每1-2小时更新一次 | 最后更新时间(美东): " + props.lastTime
 
   return (
     <Row justify="center" align="top">
@@ -64,6 +64,17 @@ const GAlertMessage = (props) => {
     </Row>)
 }
 
+const Donate = (props) => {
+  return (
+    <form action="https://www.paypal.com/donate" method="post" target="_top">
+      <input type="hidden" name="cmd" value="_donations" />
+      <input type="hidden" name="business" value="4KHSHLK8M5TE6" />
+      <input type="hidden" name="currency_code" value="USD" />
+      <input type="image" src="https://www.paypalobjects.com/zh_XC/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="使用PayPal按钮进行捐赠" />
+      <img alt="" border="0" src="https://www.paypal.com/zh_US/i/scr/pixel.gif" width="1" height="1" />
+    </form>
+  )
+}
 
 class SP500 extends Component {
   constructor(props) {
@@ -132,13 +143,14 @@ class SP500 extends Component {
                   message.success('已更新');
                 }}>刷新</Button>
               </Tooltip>
+              <Donate/>
 
-              <Button danger onClick={() => {
-                window.open(PAYPAL_URL);
-              }}>
-                <HeartTwoTone twoToneColor="#eb2f96"/>
-                支持一下
-              </Button>
+              {/*<Button danger onClick={() => {*/}
+              {/*  window.open(PAYPAL_URL);*/}
+              {/*}}>*/}
+              {/*  <HeartTwoTone twoToneColor="#eb2f96"/>*/}
+              {/*  支持一下*/}
+              {/*</Button>*/}
 
 
             </Space>
