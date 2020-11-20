@@ -11,9 +11,14 @@ DEBUG = int(os.getenv("DEBUG", 0))
 DATA_DIR = os.path.join(BASE_DIR, 'data')
 DATA_US_DIR = os.path.join(BASE_DIR, 'data', 'us')
 OUTPUT = os.path.join(BASE_DIR, os.getenv("OUTPUT", 'output'))
-NEWYORKFED_SRC_DATA = os.path.join(DATA_US_DIR, 'newyorkfed.json')
+NEWYORKFED_SOMA_SRC_DATA = os.path.join(DATA_US_DIR, 'newyorkfed_some_hold.json')
+NEWYORKFED_WEI_SRC_DATA = os.path.join(DATA_US_DIR, 'newyorkfed_wei.json')
 
+NEWYORKFED_SOMA_HOLD_URL = "https://markets.newyorkfed.org/read?productCode=30&startDt={}&endDt={}&query=summary&format=json"
+NEWYORKFED_WEI_URL = "https://www.newyorkfed.org/medialibrary/research/interactives/data//wei_data.csv"
 
+NEWYORKFED_HOLD_OUTPUT_NAME = 'newyorkfed_makert_hold.json'
+NEWYORKFED_WEI_NAME = 'newyorkfed_wei.json'
 
 LOOP_GAP = int(os.getenv("LOOP_GAP", 2))
 BROWSER_NAME = os.getenv("BROWSER_NAME", "chrome")

@@ -37,7 +37,7 @@ def check_tradecal():
         return  True
     t = today().strftime("%Y%m%d")
     if t in get_ts_us_tradecal():
-        check_day_json()
+        # check_day_json()
         return True
     return False
 

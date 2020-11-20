@@ -1,10 +1,12 @@
 import json
 import urllib3
 import os
+import csv
 import requests
 from datetime import date
 from dateutil.relativedelta import relativedelta
 from retrying import retry
+from tempfile import TemporaryFile  # , NamedTemporaryFile
 
 import config as cf
 from lib import utils
@@ -13,7 +15,6 @@ from app import logger
 
 urllib3.disable_warnings()
 
-URL = "https://markets.newyorkfed.org/read?productCode=30&startDt={}&endDt={}&query=summary&format=json"
 
 def header():
     return {'Accept': '*/*',
@@ -23,6 +24,7 @@ def header():
             'User-Agent': "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36",
             }
 
+@retry(stop_max_attempt_number=20, wait_fixed=3)
 def get(url):
     rep = requests.get(url, verify=False, headers=header())
     return rep
@@ -32,10 +34,45 @@ def day_range():
     end = date.today() + relativedelta(days=1)
     return start, end
 
+def wei(url):
+    logger.info("start wei index data ...")
+    # ['Date', 'Preliminary Estimate', 'First Revision', 'Second Revision', 'Final']
+    _tmp = "tmp.csv"
+    rep = get(url)
+    f = open(_tmp, 'w')
+    f.write(rep.text)
+    f.flush()
+    f.close()
+    f = open(_tmp, 'r')
+    d = csv.DictReader(f)
 
-def bin():
+    res = dict()
+    for i in d:
+        key = i['Date']
+        if i['Final']:
+            value = i['Final']
+        else:
+            if i['Second Revision']:
+                value = i['Second Revision']
+            else:
+                if i['First Revision']:
+                    value = i['First Revision']
+                else:
+                    value = i['Preliminary Estimate']
+        res[key] = float(value)
+    ff = open(cf.NEWYORKFED_WEI_SRC_DATA, 'w')
+    json.dump(res, ff)
+
+    newyorkfed_file = os.path.join(cf.OUTPUT, cf.NEWYORKFED_WEI_NAME)
+    utils.save_ouput(res, newyorkfed_file)
+    logger.info("end wei index data .")
+    return res
+
+
+
+def market_some_hold(url):
     start,end = day_range()
-    url = URL.format(start, end)
+    url = url.format(start, end)
 
     rep = get(url)
     logger.info("NEWYORKFED: code:{} data: {}".format(rep.status_code, rep.text))
@@ -45,7 +82,7 @@ def bin():
 
     if len(summary) == 0:
         return
-    tf = open(cf.NEWYORKFED_SRC_DATA, 'r')
+    tf = open(cf.NEWYORKFED_SOMA_SRC_DATA, 'r')
     ALL_DICT = json.load(tf)
     tf.close()
 
@@ -57,16 +94,18 @@ def bin():
             continue
         ALL_DICT[as_of_date] = i
     # save src data
-    fb = open(cf.NEWYORKFED_SRC_DATA, 'w')
+    fb = open(cf.NEWYORKFED_SOMA_SRC_DATA, 'w')
     json.dump(ALL_DICT, fb)
     fb.flush()
     fb.close()
     # save output data
-    newyorkfed_file = os.path.join(cf.OUTPUT, 'newyorkfed.json')
+    newyorkfed_file = os.path.join(cf.OUTPUT, cf.NEWYORKFED_HOLD_OUTPUT_NAME)
     utils.save_ouput(ALL_DICT, newyorkfed_file)
     return ALL_DICT
 
-
+def bin():
+    market_some_hold(cf.NEWYORKFED_SOMA_HOLD_URL)
+    wei(cf.NEWYORKFED_WEI_URL)
 
 if __name__ == '__main__':
     bin()
