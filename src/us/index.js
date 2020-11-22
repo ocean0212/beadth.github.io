@@ -1,28 +1,30 @@
 import React, {Component} from 'react';
 import {Row, Col, Tooltip, BackTop} from 'antd';
-import {HeartTwoTone, InfoCircleOutlined} from '@ant-design/icons'; // eslint-disable-line no-unused-vars
+import {InfoCircleOutlined} from '@ant-design/icons'; // eslint-disable-line no-unused-vars
 import {connect} from "react-redux"
 
-import {Layout, Statistic, Menu, Button, Space, Alert, Descriptions, message, List, Card} from 'antd';
+import {Layout, Statistic, Menu, Button, Space, Alert, Descriptions, message, List, Card} from 'antd'; // eslint-disable-line no-unused-vars
 import { Collapse, Tabs } from 'antd';
 
 import {getMtData,} from "./store/actionCreators";
-import {LeftChart, RightChart, LineChart} from "./chart";
-import {DOMAIN_NAME_URL, IS_LOADING_STRING, PAYPAL_URL, SHOW_SPACE, SP500_SUB_CODE_CN} from "../constants"; // eslint-disable-line no-unused-vars
+import {BreadthLeftChart, BreadthRightChart, BreadthLineChart} from "./chart";
+import {DOMAIN_NAME_URL, IS_LOADING_STRING, PAYPAL_URL, SHOW_SPACE, SP500_SUB_CODE_CN, BannerData} from "../constants"; // eslint-disable-line no-unused-vars
 
-const { Panel } = Collapse;
+const { Panel } = Collapse; // eslint-disable-line no-unused-vars
 const { TabPane } = Tabs;
 
 const Top = (props) => {
   const {Header} = Layout;
 
   return (
+    <Col xs={{span: 0}} sm={{span: 24}} md={{span: 24}} lg={{span: 24}} xl={{span: 24}} align="top">
     <Header className="header">
       <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
         <Menu.Item key="1">Market Breadth</Menu.Item>
-        {/*<Menu.Item key="2">功能开发中..</Menu.Item>*/}
+        <Menu.Item key="1"><a href={"https://discord.gg/HZabmnG3PS"} target={"_blank"} rel="noreferrer">小站 Discord</a></Menu.Item>
       </Menu>
     </Header>
+    </Col>
   )
 }
 
@@ -66,13 +68,37 @@ const GAlertMessage = (props) => {
 
 const Donate = (props) => {
   return (
-    <form action="https://www.paypal.com/donate" method="post" target="_top">
-      <input type="hidden" name="cmd" value="_donations" />
-      <input type="hidden" name="business" value="4KHSHLK8M5TE6" />
-      <input type="hidden" name="currency_code" value="USD" />
-      <input type="image" src="https://www.paypalobjects.com/zh_XC/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="使用PayPal按钮进行捐赠" />
-      <img alt="" border="0" src="https://www.paypal.com/zh_US/i/scr/pixel.gif" width="1" height="1" />
-    </form>
+    <a href={PAYPAL_URL} target={"_blank"} rel={"noreferrer"}>
+      <img
+        border="0"
+        src="https://www.paypalobjects.com/zh_XC/i/btn/btn_donateCC_LG.gif"
+        title="PayPal - The safer, easier way to pay online!"
+        alt="使用PayPal按钮进行捐赠"
+      />
+    </a>
+  )
+}
+
+const Banner = (props) => {
+
+  const contentStyle = {
+    height: '50px',
+    color: '#fff',
+    lineHeight: '50px',
+    textAlign: 'center',
+    background: '#364d79',
+    zIndex: '-1',
+    // whiteSpace:"normal",
+  };
+
+  return (
+    <Row justify="center" align="top">
+      <Col xs={{span: 24}} sm={{span: 19}} md={{span: 20}} lg={{span: 16}} xl={{span: 16}} align="top">
+        <h2 style={contentStyle} >
+          <a style={contentStyle} rel={"noreferrer"} href={BannerData[0].url} target="_blank" title={BannerData[0].desc}>{BannerData[0].text} : {BannerData[0].title}</a>
+        </h2>
+      </Col>
+    </Row>
   )
 }
 
@@ -145,17 +171,10 @@ class SP500 extends Component {
               </Tooltip>
               <Donate/>
 
-              {/*<Button danger onClick={() => {*/}
-              {/*  window.open(PAYPAL_URL);*/}
-              {/*}}>*/}
-              {/*  <HeartTwoTone twoToneColor="#eb2f96"/>*/}
-              {/*  支持一下*/}
-              {/*</Button>*/}
-
-
             </Space>
           </Col>
         </Row>
+        <Banner/>
         <Tabs defaultActiveKey="1" centered>
           <TabPane tab="市场宽度" key="1">
             <Row justify="center" align="top">
@@ -163,46 +182,46 @@ class SP500 extends Component {
                 {
                   isLoading
                     ? <div>{IS_LOADING_STRING}</div>
-                    : <LineChart data={lineDataList} date={breadthDateRange}/>
+                    : <BreadthLineChart data={lineDataList} date={breadthDateRange}/>
                 }
               </Col>
             </Row>
 
             <Row justify="center" align="top">
 
-              <Col xs={{span: 0}} sm={{span: 21}} md={{span: 20}} lg={{span: 17}} xl={{span: 17}} align="top" style={{padding: '2px 0 10px'}}>
-                <Collapse  bordered={false}>
-                  <Panel header="各代码中英文对照" key="1">
-                    <List
-                      grid={{
-                        gutter: 16,
-                        xs: 1,
-                        sm: 2,
-                        md: 4,
-                        lg: 4,
-                        xl: 6,
-                        xxl: 6,
-                      }}
-                      dataSource={SP500_SUB_CODE_CN}
-                      renderItem={item => (
-                        <List.Item>
-                          <Card title={""}>
-                            <Tooltip title={item.desc}>
-                              <span>{item.code}</span>
-                            </Tooltip>
-                          </Card>
-                        </List.Item>
-                      )}
-                    />
-                  </Panel>
-                </Collapse>
-              </Col>
+              {/*<Col xs={{span: 0}} sm={{span: 21}} md={{span: 20}} lg={{span: 17}} xl={{span: 17}} align="top" style={{padding: '2px 0 10px'}}>*/}
+              {/*  <Collapse  bordered={false}>*/}
+              {/*    <Panel header="各代码中英文对照" key="1">*/}
+              {/*      <List*/}
+              {/*        grid={{*/}
+              {/*          gutter: 16,*/}
+              {/*          xs: 1,*/}
+              {/*          sm: 2,*/}
+              {/*          md: 4,*/}
+              {/*          lg: 4,*/}
+              {/*          xl: 6,*/}
+              {/*          xxl: 6,*/}
+              {/*        }}*/}
+              {/*        dataSource={SP500_SUB_CODE_CN}*/}
+              {/*        renderItem={item => (*/}
+              {/*          <List.Item>*/}
+              {/*            <Card title={""}>*/}
+              {/*              <Tooltip title={item.desc}>*/}
+              {/*                <span>{item.code}</span>*/}
+              {/*              </Tooltip>*/}
+              {/*            </Card>*/}
+              {/*          </List.Item>*/}
+              {/*        )}*/}
+              {/*      />*/}
+              {/*    </Panel>*/}
+              {/*  </Collapse>*/}
+              {/*</Col>*/}
 
               <Col xs={{span: 0}} sm={{span: 19}} md={{span: 18}} lg={{span: 14}} xl={{span: 14}} >
                 {
                   isLoading
                     ? <div>{IS_LOADING_STRING}</div>
-                    : <LeftChart data={mv20DataList} days={dayList}/>
+                    : <BreadthLeftChart data={mv20DataList} days={dayList}/>
 
                 }
               </Col>
@@ -211,7 +230,7 @@ class SP500 extends Component {
                 {
                   isLoading
                     ? <div>{IS_LOADING_STRING}</div>
-                    : <RightChart data={totalList} days={dayList}/>
+                    : <BreadthRightChart data={totalList} days={dayList}/>
                 }
               </Col>
             </Row>
@@ -246,21 +265,21 @@ class SP500 extends Component {
 // link 规则（方式）映射关系
 const mapState = (state) => {
   return {
-    dataList: state.getIn(['sp500', 'dataList']),
-    totalList: state.getIn(['sp500', 'totalList']),
-    codeList: state.getIn(['sp500', 'codeList']),
-    dayList: state.getIn(['sp500', 'dayList']),
-    mv20CodeList: state.getIn(['sp500', 'mv20CodeList']),
-    mv20DataList: state.getIn(['sp500', 'mv20DataList']),
-    isLoading: state.getIn(['sp500', 'isLoading']),
-    lastBreadth: state.getIn(['sp500', 'lastBreadth']),
-    highBreadth: state.getIn(['sp500', 'highBreadth']),
-    lowBreadth: state.getIn(['sp500', 'lowBreadth']),
-    openBreadth: state.getIn(['sp500', 'openBreadth']),
-    lastTime: state.getIn(['sp500', 'lastTime']),
-    lineDataList: state.getIn(['sp500', 'lineDataList']),
-    breadthChartHigh: state.getIn(['sp500', 'breadthChartHigh']),
-    breadthDateRange: state.getIn(['sp500', 'breadthDateRange']),
+    dataList: state.getIn(['us', 'dataList']),
+    totalList: state.getIn(['us', 'totalList']),
+    codeList: state.getIn(['us', 'codeList']),
+    dayList: state.getIn(['us', 'dayList']),
+    mv20CodeList: state.getIn(['us', 'mv20CodeList']),
+    mv20DataList: state.getIn(['us', 'mv20DataList']),
+    isLoading: state.getIn(['us', 'isLoading']),
+    lastBreadth: state.getIn(['us', 'lastBreadth']),
+    highBreadth: state.getIn(['us', 'highBreadth']),
+    lowBreadth: state.getIn(['us', 'lowBreadth']),
+    openBreadth: state.getIn(['us', 'openBreadth']),
+    lastTime: state.getIn(['us', 'lastTime']),
+    lineDataList: state.getIn(['us', 'lineDataList']),
+    breadthChartHigh: state.getIn(['us', 'breadthChartHigh']),
+    breadthDateRange: state.getIn(['us', 'breadthDateRange']),
   }
 };
 

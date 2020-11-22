@@ -3,12 +3,6 @@ import Base64 from 'base-64';
 import * as constants from './constants';
 import {CHART_CODE_LIST} from "../../constants";
 
-export const changeCurrentCity = (city, zoom) => ({
-  type: constants.CHANGE_CURRENT_CITY,
-  currentCity: city,
-  currentZoom: zoom,
-})
-
 export const InitDataList = (srcData) => {
   // 数据处理
   var dayList = [];
@@ -76,14 +70,14 @@ export const InitDataList = (srcData) => {
     return {
       name: arr[0],
       day: arr[1],
-      sales: arr[2],
+      breadth: arr[2],
     };
   });
   const mv20TotalSource = totalList.map((arr) => {
     return {
       name: arr[0],
       day: arr[1],
-      sales: arr[2],
+      breadth: arr[2],
     };
   });
 
@@ -104,12 +98,6 @@ export const InitDataList = (srcData) => {
     breadthDateRange: breadthDateRange,
   }
 };
-
-
-export const changeCurrentZoom = (value) => ({
-  type: constants.CHANGE_CURRENT_ZOOM,
-  value,
-})
 
 // 使用了 redux-thunk 之后 返回可以是一个函数
 export const getMtData = () => {

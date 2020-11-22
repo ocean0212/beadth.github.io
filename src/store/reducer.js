@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux-immutable';
-import { reducer as sp500Reducer } from '../sp500/store';
+import { reducer as sp500Reducer } from '../us/store';
 
 const reducer = combineReducers({
 	// vipmap: vipmapReducer,
-	sp500: sp500Reducer,
+	us: sp500Reducer,
 });
 
 export default reducer;

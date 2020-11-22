@@ -4,7 +4,7 @@ import { Provider } from "react-redux"
 
 import 'antd/dist/antd.css';
 
-import SP500 from './sp500';
+import SP500 from './us';
 import store from "./store";
 
 const App = (

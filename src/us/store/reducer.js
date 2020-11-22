@@ -18,14 +18,6 @@ const defaultState = fromJS({
 });
 
 
-const changeCurrentCity = (state, action) => {
-  var result = {
-    "currentCity": action.currentCity,
-    "currentZoom": action.currentZoom,
-  }
-  return state.merge(result)
-}
-
 const initDataList = (state, action) => {
   return state.merge({
     dataList: action.dataList,
@@ -54,8 +46,6 @@ const reducer = (state = defaultState, action) => {
   switch(action.type) {
     case constants.INIT_DATA_LIST:
       return initDataList(state, action)
-    case constants.CHANGE_CURRENT_CITY:
-      return changeCurrentCity(state, action)
     default:
       return state;
   }

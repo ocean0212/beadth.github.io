@@ -11,10 +11,13 @@ import {
   Annotation,
   Slider,
 } from 'bizcharts';
-import {DOMAIN_NAME} from "../constants";
+import {BREADTH_CODE_CN, DOMAIN_NAME} from "../constants";
 
 
-const LeftChart = (props) => {
+const BreadthLeftChart = (props) => {
+
+
+
   const scale = {
     name: {
       type: 'cat',
@@ -29,16 +32,22 @@ const LeftChart = (props) => {
       nice: true,
     }
   };
+  const codeLabel = {
+    formatter(text, item, index) {
+      return `${text}\n${BREADTH_CODE_CN[text]}`;
+  }}
 
   return <Chart
     scale={scale}
     height={3000}
+    animate={true}
     data={props.data}
     autoFit
     forceFit={true}
   >
 
     <Axis
+      label={codeLabel}
       name={'name'}
       position='top'
 
@@ -74,8 +83,8 @@ const LeftChart = (props) => {
     <Polygon
       position={'name*day'}
       // color={['sales', '#BAE7FF-#1890FF-#0050B3']}
-      color={['sales', '#FB5050-#FFFFFF-#009966']}
-      label={['sales', {
+      color={['breadth', '#FB5050-#FFFFFF-#009966']}
+      label={['breadth', {
         offset: -2,
         style: {
           fill: '#2E2E2E',
@@ -94,7 +103,7 @@ const LeftChart = (props) => {
   </Chart>
 }
 
-const RightChart = (props) => {
+const BreadthRightChart = (props) => {
   const scale = {
     name: {
       type: 'cat',
@@ -108,6 +117,11 @@ const RightChart = (props) => {
       nice: true,
     }
   };
+  const codeLabel = {
+    formatter(text, item, index) {
+      return `${text}\n${BREADTH_CODE_CN[text]}`;
+    },
+  }
 
   return <Chart
     scale={scale}
@@ -120,6 +134,7 @@ const RightChart = (props) => {
     <Axis
       name={'name'}
       position='top'
+      label={codeLabel}
 
       tickLine={null}
       grid={{
@@ -152,8 +167,8 @@ const RightChart = (props) => {
     <Legend position='right-top' offsetY={100} visible={false}/>
     <Polygon
       position={'name*day'}
-      color={['sales', '#FB5050-#FFFFFF-#009966']}
-      label={['sales', {
+      color={['breadth', '#FB5050-#FFFFFF-#009966']}
+      label={['breadth', {
         offset: -2,
         style: {
           fill: '#2E2E2E',
@@ -172,7 +187,7 @@ const RightChart = (props) => {
   </Chart>
 }
 
-const LineChart = (props) => {
+const BreadthLineChart = (props) => {
   const styles = {
     mainTitle: {
       fontSize: 16,
@@ -226,10 +241,7 @@ const LineChart = (props) => {
           start={['min', '200']}
           end={['max', '200']}
           text={{
-            /** 文本位置，除了制定 'start', 'center' 和 'end' 外，还可以使用百分比进行定位， 比如 '30%' */
             position: 'end',
-            /** 是否自动旋转 */
-            /** 显示的文本内容 */
             content: '狩猎区',
             style: {
               fill: '#FF4D4F'
@@ -243,10 +255,7 @@ const LineChart = (props) => {
           start={['min', '949']}
           end={['max', '949']}
           text={{
-            /** 文本位置，除了制定 'start', 'center' 和 'end' 外，还可以使用百分比进行定位， 比如 '30%' */
             position: 'end',
-            /** 是否自动旋转 */
-            /** 显示的文本内容 */
             content: '走货区',
             style: {
               fill: '#FF4D4F'
@@ -278,5 +287,4 @@ const LineChart = (props) => {
     </div>)
 }
 
-
-export {LeftChart, RightChart, LineChart};
+export {BreadthLeftChart, BreadthRightChart, BreadthLineChart};
