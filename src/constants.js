@@ -75,3 +75,4 @@ export const BannerData = [
     desc: '仅限拥有中国大陆身份证，且年满18周岁用户'
   },
 ]
+export const LEI_SITE = "https://lonecapital.com/"

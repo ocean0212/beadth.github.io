@@ -99,15 +99,32 @@ export const InitDataList = (srcData) => {
   }
 };
 
+export const marketSomaHoldFormat = (srcData) => {
+  console.log('func marketSomaHoldFormat')
+  var data = JSON.parse(Base64.decode(srcData.data))
+  console.log(data);
+};
+
 // 使用了 redux-thunk 之后 返回可以是一个函数
 export const getMtData = () => {
   return (dispatch) => { // dispatch: 如果action是函数的话会自动接收到dispatch方法
     // ajax request
     var t = "?t=" + Date.parse(new Date()) / 1000
-    var url = window.location.href
     var header = {'Cache-Control': 'no-cache'}
-    axios.get(url + "us/sp500_100.json" + t, header).then((res) => {
+    axios.get("us/sp500_100.json" + t, header).then((res) => {
       dispatch(InitDataList(res.data)) // action change store
+    }).catch(() => { // ajax request error
+      console.log("error")
+    })
+  }
+}
+
+export const getMarketSomaHold = () => {
+  console.log('getMarketSomaHold actuon...')
+  return (dispatch) => {
+    console.log('ajax getMarketSomaHold')
+    axios.get("us/newyorkfed_makert_hold.json").then((res) => {
+      dispatch(marketSomaHoldFormat(res.data))
     }).catch(() => { // ajax request error
       console.log("error")
     })

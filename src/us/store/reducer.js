@@ -12,6 +12,7 @@ const defaultState = fromJS({
   chartList:[],
   breadthDays: 100,
   isLoading: true,
+  isGetData: true,
   lastBreadth: 0,
   lastTime: IS_LOADING_STRING,
   BREADTH_DATE_RANGE: [],
@@ -38,6 +39,14 @@ const initDataList = (state, action) => {
   })
 }
 
+const updateSomeHold = (state, action) => {
+  return state.merge({
+    isGetData: action.isGetData,
+    someHolDays: action.someHolDays,
+    someHloData: action.someHloData,
+  })
+}
+
 // state    整个DOM的数据库
 // action
 // reducer 可以接收state，但是不可以在修改stacurrentCityte
@@ -46,6 +55,8 @@ const reducer = (state = defaultState, action) => {
   switch(action.type) {
     case constants.INIT_DATA_LIST:
       return initDataList(state, action)
+    case constants.GET_NEWYORKFED_SOMA_HOLD:
+      return updateSomeHold(state, action)
     default:
       return state;
   }
