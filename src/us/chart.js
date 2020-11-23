@@ -16,8 +16,6 @@ import {BREADTH_CODE_CN, DOMAIN_NAME} from "../constants";
 
 const BreadthLeftChart = (props) => {
 
-
-
   const scale = {
     name: {
       type: 'cat',

@@ -1,14 +1,21 @@
-import React, {Component} from 'react';
-import {Row, Col, Tooltip, BackTop} from 'antd';
-import {InfoCircleOutlined} from '@ant-design/icons'; // eslint-disable-line no-unused-vars
+import React, {Component, useState} from 'react';
+import {Row, Col, Tooltip, BackTop, Drawer, Divider, Image, Button, Alert} from 'antd';
+import {InfoCircleOutlined, HeartTwoTone} from '@ant-design/icons'; // eslint-disable-line no-unused-vars
 import {connect} from "react-redux"
 
-import {Layout, Statistic, Menu, Button, Space, Alert, Descriptions, message, List, Card} from 'antd'; // eslint-disable-line no-unused-vars
+import {Layout, Statistic, Menu, Space, Descriptions, message, List, Card} from 'antd'; // eslint-disable-line no-unused-vars
 import { Collapse, Tabs } from 'antd';
 
 import {getMtData,} from "./store/actionCreators";
 import {BreadthLeftChart, BreadthRightChart, BreadthLineChart} from "./chart";
-import {DOMAIN_NAME_URL, IS_LOADING_STRING, PAYPAL_URL, SHOW_SPACE, SP500_SUB_CODE_CN, BannerData} from "../constants"; // eslint-disable-line no-unused-vars
+import {
+  DOMAIN_NAME_URL,
+  IS_LOADING_STRING,
+  PAYPAL_URL,
+  SHOW_SPACE,
+  BannerData,
+  PAYPAL_PAY_QR, ALI_PAY_QR, WECHAT_PAY_QR
+} from "../constants"; // eslint-disable-line no-unused-vars
 
 const { Panel } = Collapse; // eslint-disable-line no-unused-vars
 const { TabPane } = Tabs;
@@ -67,15 +74,105 @@ const GAlertMessage = (props) => {
 }
 
 const Donate = (props) => {
+
+  const [visible, setVisible] = useState(false);
+  const showDrawer = () => {
+    setVisible(true);
+  };
+  const onClose = () => {
+    setVisible(false);
+  };
+
   return (
-    <a href={PAYPAL_URL} target={"_blank"} rel={"noreferrer"}>
-      <img
-        border="0"
-        src="https://www.paypalobjects.com/zh_XC/i/btn/btn_donateCC_LG.gif"
-        title="PayPal - The safer, easier way to pay online!"
-        alt="使用PayPal按钮进行捐赠"
-      />
-    </a>
+    <div>
+      {/*<a href={PAYPAL_URL} target={"_blank"} rel={"noreferrer"}>*/}
+      {/*  <img*/}
+      {/*    border="0"*/}
+      {/*    src="https://www.paypalobjects.com/zh_XC/i/btn/btn_donateCC_LG.gif"*/}
+      {/*    title="PayPal - The safer, easier way to pay online!"*/}
+      {/*    alt="使用PayPal按钮进行捐赠"*/}
+      {/*  />*/}
+      {/*</a>*/}
+      <Button danger onClick={showDrawer}>
+        <HeartTwoTone twoToneColor="#eb2f96"/>
+        支持
+      </Button>
+
+      <Drawer
+        title="捐助/支持"
+        placement="right"
+        closable={false}
+        onClose={onClose}
+        visible={visible}
+      >
+        <Row justify="center" align="top">
+          <a href={PAYPAL_URL} target={"_blank"} rel={"noreferrer"}>
+            <img
+              border="0"
+              src="https://www.paypalobjects.com/zh_XC/i/btn/btn_donate_SM.gif"
+              title="PayPal - The safer, easier way to pay online!"
+              alt="使用PayPal按钮进行捐赠"
+            />
+          </a>
+          <Image
+            width={200}
+            src={PAYPAL_PAY_QR}
+            alt={"点击跳转到Paypal.me"}
+          />
+          <Divider plain>支付宝</Divider>
+          <Image
+            width={200}
+            src={ALI_PAY_QR}
+          />
+          <Divider plain>微信</Divider>
+          <Image
+            width={200}
+            src={WECHAT_PAY_QR}
+          />
+        </Row>
+
+      </Drawer>
+    </div>
+  )
+}
+
+const ContentTop = (props) => {
+  props = props.props
+  return (
+    <Row gutter={[8, 8]} justify="center" style={{padding: '12px 0'}}>
+      <Col xs={{span: 11, offset: 1}} sm={{span: 7, offset: 2}} md={{span: 10, offset: 2}} lg={{span: 7, offset: 1}}
+           xl={{span: 7, offset: 1}}>
+
+        {
+          props.isLoading
+            ? <div>{IS_LOADING_STRING}</div>
+            : <Statistic title="Market Breadth" value={props.lastBreadth}/>
+        }
+
+        <Descriptions title=" ">
+          <Descriptions.Item label="开盘">
+            <Tooltip title="当日所有子行业开盘宽度之和" color='blue' key='blue-text'>
+              {props.openBreadth} {SHOW_SPACE}
+              <InfoCircleOutlined/>
+            </Tooltip>
+          </Descriptions.Item>
+        </Descriptions>
+      </Col>
+      <Col xs={{span: 7, offset: 0}} sm={{span: 7, offset: 0}} md={{span: 10, offset: 1}} lg={{span: 7, offset: 0}}
+           xl={{span: 7, offset: 2}} align="middle">
+
+        <Space size={25} direction="vertical">
+          <Tooltip title="每10分钟更新本地数据" color='blue' key='blue-text'>
+            <Button type="primary" onClick={() => {
+              props.initData();
+              message.success('已更新');
+            }}>刷新</Button>
+          </Tooltip>
+          <Donate/>
+
+        </Space>
+      </Col>
+    </Row>
   )
 }
 
@@ -127,53 +224,7 @@ class SP500 extends Component {
       <Layout>
         <Top/>
         <GAlertMessage lastTime={lastTime}/>
-
-        <Row gutter={[8, 8]} justify="center" style={{padding: '12px 0'}}>
-          <Col xs={{span: 11, offset: 1}} sm={{span: 7, offset: 2}} md={{span: 10, offset: 2}} lg={{span: 7, offset: 1}}
-               xl={{span: 7, offset: 1}}>
-
-            {
-              isLoading
-                ? <div>{IS_LOADING_STRING}</div>
-                : <Statistic title="Market Breadth" value={lastBreadth}/>
-            }
-
-            <Descriptions title=" ">
-              {/*<Descriptions.Item label="最高">*/}
-              {/*  <Tooltip title='当日所有子行业"最高"宽度之和，数据很敏感，仅供参考' color='blue' key='blue-text'>*/}
-              {/*    {highBreadth}  {SHOW_SPACE}*/}
-              {/*    <InfoCircleOutlined />*/}
-              {/*  </Tooltip>*/}
-              {/*</Descriptions.Item>*/}
-              {/*<Descriptions.Item label="最低">*/}
-              {/*  <Tooltip title="当日所有子行业最低宽度之和" color='blue' key='blue-text'>*/}
-              {/*    {lowBreadth} {SHOW_SPACE}*/}
-              {/*    <InfoCircleOutlined />*/}
-              {/*  </Tooltip>*/}
-              {/*</Descriptions.Item>*/}
-              <Descriptions.Item label="开盘">
-                <Tooltip title="当日所有子行业开盘宽度之和" color='blue' key='blue-text'>
-                  {openBreadth} {SHOW_SPACE}
-                  <InfoCircleOutlined/>
-                </Tooltip>
-              </Descriptions.Item>
-            </Descriptions>
-          </Col>
-          <Col xs={{span: 7, offset: 0}} sm={{span: 7, offset: 0}} md={{span: 10, offset: 1}} lg={{span: 7, offset: 0}}
-               xl={{span: 7, offset: 2}} align="middle">
-
-            <Space size={25} direction="vertical">
-              <Tooltip title="交易时间延迟1-2小时." color='blue' key='blue-text'>
-                <Button type="primary" onClick={() => {
-                  this.props.initData();
-                  message.success('已更新');
-                }}>刷新</Button>
-              </Tooltip>
-              <Donate/>
-
-            </Space>
-          </Col>
-        </Row>
+        <ContentTop props={this.props} isLoading={isLoading}/>
         <Banner/>
         <Tabs defaultActiveKey="1" centered>
           <TabPane tab="市场宽度" key="1">
@@ -188,34 +239,6 @@ class SP500 extends Component {
             </Row>
 
             <Row justify="center" align="top">
-
-              {/*<Col xs={{span: 0}} sm={{span: 21}} md={{span: 20}} lg={{span: 17}} xl={{span: 17}} align="top" style={{padding: '2px 0 10px'}}>*/}
-              {/*  <Collapse  bordered={false}>*/}
-              {/*    <Panel header="各代码中英文对照" key="1">*/}
-              {/*      <List*/}
-              {/*        grid={{*/}
-              {/*          gutter: 16,*/}
-              {/*          xs: 1,*/}
-              {/*          sm: 2,*/}
-              {/*          md: 4,*/}
-              {/*          lg: 4,*/}
-              {/*          xl: 6,*/}
-              {/*          xxl: 6,*/}
-              {/*        }}*/}
-              {/*        dataSource={SP500_SUB_CODE_CN}*/}
-              {/*        renderItem={item => (*/}
-              {/*          <List.Item>*/}
-              {/*            <Card title={""}>*/}
-              {/*              <Tooltip title={item.desc}>*/}
-              {/*                <span>{item.code}</span>*/}
-              {/*              </Tooltip>*/}
-              {/*            </Card>*/}
-              {/*          </List.Item>*/}
-              {/*        )}*/}
-              {/*      />*/}
-              {/*    </Panel>*/}
-              {/*  </Collapse>*/}
-              {/*</Col>*/}
 
               <Col xs={{span: 0}} sm={{span: 19}} md={{span: 18}} lg={{span: 14}} xl={{span: 14}} >
                 {
