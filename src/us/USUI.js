@@ -44,7 +44,7 @@ export const Top = (props) => {
         <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
           <Menu.Item key="headerItem1">Market Breadth</Menu.Item>
           <Menu.Item key="headerItem5"><a href={LEI_SITE} target={"_blank"} rel="noreferrer">LEI & LoneCapital</a></Menu.Item>
-          <Menu.Item key="headerItem3"><a href={"https://discord.gg/HZabmnG3PS"} target={"_blank"} rel="noreferrer">小站 Discord</a></Menu.Item>
+          <Menu.Item key="headerItem3"><a href={"https://discord.gg/HZabmnG3PS"} target={"_blank"} rel="noreferrer">行情交流</a></Menu.Item>
           <Menu.Item key="headerItem4"  onClick={showDrawer} >加入/合作</Menu.Item>
         </Menu>
         <Drawer
@@ -57,13 +57,13 @@ export const Top = (props) => {
           <Row justify="center" align="top">
             <Title>加入</Title>
             <Paragraph>
-              目前急缺兼职前端工程师，vue/react 均可, 请不要犹豫，直接发送邮件
+              目前急缺前端工程师，vue/react 均可, 请不要犹豫，直接发送邮件
             </Paragraph>
             <Paragraph copyable={{ tooltips: false }}>kenteb@outlook.com</Paragraph>
 
             <Title>合作</Title>
             <Paragraph>
-              目前收入来源仅来自网友们的热心捐助，我们深知捐助不是长久之计，网站的运营和开需要一定的费用来维持发，如果有合作的机会请联系我们。
+              目前收入来源仅来自网友们的热心捐助，我们深知捐助不是长久之计，网站的运营和开需要一定的费用来维持，如果有合作的机会请联系我们。
             </Paragraph>
             <Paragraph copyable={{ tooltips: false }}>kenteb@outlook.com</Paragraph>
           </Row>
