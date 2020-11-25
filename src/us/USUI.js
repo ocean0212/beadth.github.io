@@ -14,7 +14,8 @@ import {
   Menu, message,
   Row, Space,
   Statistic,
-  Tooltip
+  Tooltip,
+  Typography,
 } from "antd";
 import {
   ALI_PAY_QR, BannerData,
@@ -28,6 +29,14 @@ import {
 
 export const Top = (props) => {
   const {Header} = Layout;
+  const { Title, Paragraph } = Typography;
+  const [visible, setVisible] = useState(false);
+  const showDrawer = () => {
+    setVisible(true);
+  };
+  const onClose = () => {
+    setVisible(false);
+  };
 
   return (
     <Col xs={{span: 0}} sm={{span: 24}} md={{span: 24}} lg={{span: 24}} xl={{span: 24}} align="top">
@@ -36,7 +45,30 @@ export const Top = (props) => {
           <Menu.Item key="headerItem1">Market Breadth</Menu.Item>
           <Menu.Item key="headerItem5"><a href={LEI_SITE} target={"_blank"} rel="noreferrer">LEI & LoneCapital</a></Menu.Item>
           <Menu.Item key="headerItem3"><a href={"https://discord.gg/HZabmnG3PS"} target={"_blank"} rel="noreferrer">小站 Discord</a></Menu.Item>
+          <Menu.Item key="headerItem4"  onClick={showDrawer} >加入/合作</Menu.Item>
         </Menu>
+        <Drawer
+          title="加入我们/合作"
+          placement="left"
+          closable={false}
+          onClose={onClose}
+          visible={visible}
+        >
+          <Row justify="center" align="top">
+            <Title>加入</Title>
+            <Paragraph>
+              目前急缺兼职前端工程师，vue/react 均可, 请不要犹豫，直接发送邮件
+            </Paragraph>
+            <Paragraph copyable={{ tooltips: false }}>kenteb@outlook.com</Paragraph>
+
+            <Title>合作</Title>
+            <Paragraph>
+              目前收入来源仅来自网友们的热心捐助，我们深知捐助不是长久之计，网站的运营和开需要一定的费用来维持发，如果有合作的机会请联系我们。
+            </Paragraph>
+            <Paragraph copyable={{ tooltips: false }}>kenteb@outlook.com</Paragraph>
+          </Row>
+
+        </Drawer>
       </Header>
     </Col>
   )
