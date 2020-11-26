@@ -4,12 +4,12 @@ import { Provider } from "react-redux"
 
 import 'antd/dist/antd.css';
 
-import SP500 from './us';
+import Home from './us';
 import store from "./store";
 
 const App = (
     <Provider store={store}>
-        <SP500/>
+        <Home/>
     </Provider>
 )
 

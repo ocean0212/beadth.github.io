@@ -118,15 +118,3 @@ export const getMtData = () => {
     })
   }
 }
-
-export const getMarketSomaHold = () => {
-  console.log('getMarketSomaHold actuon...')
-  return (dispatch) => {
-    console.log('ajax getMarketSomaHold')
-    axios.get("us/newyorkfed_makert_hold.json").then((res) => {
-      dispatch(marketSomaHoldFormat(res.data))
-    }).catch(() => { // ajax request error
-      console.log("error")
-    })
-  }
-}

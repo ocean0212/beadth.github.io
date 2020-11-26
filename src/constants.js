@@ -1,6 +1,11 @@
 export const ALI_PAY_QR = "/img/AliPayQR.png"
 export const WECHAT_PAY_QR = "/img/WeChatPayQR.png"
 export const PAYPAL_PAY_QR = "/img/PaypalQR.png"
+export const ROUTER_PATH = {
+  INDEX: '/',
+  ECONOMIC:'/economic',
+  DASHBOARD:'/dashboard',
+}
 export const CHART_CODE_LIST = ['SPX','COM','CND','CNS','ENE','FIN','HLT','IND','MAT','REI','TEC','UTL']
 export const BREADTH_CODE_CN = {
   SPX:'标普500',

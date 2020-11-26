@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import {InfoCircleOutlined, HeartTwoTone} from '@ant-design/icons'; // eslint-disable-line no-unused-vars
-
+import {InfoCircleOutlined, HeartTwoTone} from '@ant-design/icons';
 import {
   Alert,
   BackTop,
@@ -15,8 +14,10 @@ import {
   Row, Space,
   Statistic,
   Tooltip,
+  Skeleton,
   Typography,
 } from "antd";
+
 import {
   ALI_PAY_QR, BannerData,
   DOMAIN_NAME_URL,
@@ -27,7 +28,7 @@ import {
   WECHAT_PAY_QR
 } from "../constants";
 
-export const Top = (props) => {
+export const Headers = (props) => {
   const {Header} = Layout;
   const { Title, Paragraph } = Typography;
   const [visible, setVisible] = useState(false);
@@ -44,7 +45,7 @@ export const Top = (props) => {
         <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
           <Menu.Item key="headerItem1">Market Breadth</Menu.Item>
           <Menu.Item key="headerItem5"><a href={LEI_SITE} target={"_blank"} rel="noreferrer">LEI & LoneCapital</a></Menu.Item>
-          <Menu.Item key="headerItem3"><a href={"https://discord.gg/HZabmnG3PS"} target={"_blank"} rel="noreferrer">行情交流</a></Menu.Item>
+          <Menu.Item key="headerItem3"><a href={"https://discord.gg/HZabmnG3PS"} target={"_blank"} rel="noreferrer">投资交流</a></Menu.Item>
           <Menu.Item key="headerItem4"  onClick={showDrawer} >加入/合作</Menu.Item>
         </Menu>
         <Drawer
@@ -124,14 +125,6 @@ export const Donate = (props) => {
 
   return (
     <div>
-      {/*<a href={PAYPAL_URL} target={"_blank"} rel={"noreferrer"}>*/}
-      {/*  <img*/}
-      {/*    border="0"*/}
-      {/*    src="https://www.paypalobjects.com/zh_XC/i/btn/btn_donateCC_LG.gif"*/}
-      {/*    title="PayPal - The safer, easier way to pay online!"*/}
-      {/*    alt="使用PayPal按钮进行捐赠"*/}
-      {/*  />*/}
-      {/*</a>*/}
       <Button danger onClick={showDrawer}>
         <HeartTwoTone twoToneColor="#eb2f96"/>
         支持
@@ -175,8 +168,8 @@ export const Donate = (props) => {
   )
 }
 
-export const ContentTop = (props) => {
-  props = props.props
+export const BreadthSimple = (props) => {
+
   return (
     <Row gutter={[8, 8]} justify="center" style={{padding: '12px 0'}}>
       <Col xs={{span: 11, offset: 1}} sm={{span: 7, offset: 2}} md={{span: 10, offset: 2}} lg={{span: 7, offset: 1}}
@@ -215,7 +208,7 @@ export const ContentTop = (props) => {
   )
 }
 
-export const Banner = (props) => {
+export const ADBanner = (props) => {
 
   const contentStyle = {
     height: '50px',
@@ -236,4 +229,8 @@ export const Banner = (props) => {
       </Col>
     </Row>
   )
+}
+
+export const Loading = ()=>{
+  return <Skeleton loading={true} active={true}/>
 }
