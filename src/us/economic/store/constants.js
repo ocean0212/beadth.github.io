@@ -1,1 +1,2 @@
 export const GET_NEWYORKFED_SOMA_HOLD = 'us/economic/GET_NEWYORKFED_SOMA_HOLD';
+export const GET_NEWYORKFED_WEI = 'us/economic/GET_NEWYORKFED_WEI';

@@ -81,3 +81,13 @@ export const BannerData = [
   },
 ]
 export const LEI_SITE = "https://lonecapital.com/"
+export const CHART_COPYRIGHT = {
+  position: ['median', 'max'],
+  top: false,
+  content: DOMAIN_NAME,
+  offsetX: -50,
+  style: {
+    fill: "#C0C0C0",
+    fontSize: 16,
+  },
+}

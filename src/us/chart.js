@@ -11,7 +11,7 @@ import {
   Annotation,
   Slider,
 } from 'bizcharts';
-import {BREADTH_CODE_CN, DOMAIN_NAME} from "../constants";
+import {BREADTH_CODE_CN, CHART_COPYRIGHT} from "../constants";
 
 
 const BreadthLeftChart = (props) => {
@@ -209,17 +209,6 @@ const BreadthLineChart = (props) => {
     smooth: false
   }
 
-  const copyright = {
-    position: ['median', 'max'],
-    top: false,
-    content: DOMAIN_NAME,
-    offsetX: -50,
-    style: {
-      fill: "#C0C0C0",
-      fontSize: 16,
-    },
-  }
-
   return (
     <div>
       <h4 className='main-title' style={styles.mainTitle}>
@@ -229,7 +218,7 @@ const BreadthLineChart = (props) => {
         {props.date}
       </h5>
       <Chart scale={{breadth: {min: 0, max: 1000}}} padding={[10, 20, 38, 40]} autoFit height={220} data={props.data}>
-        <Annotation.Text {...copyright}/>
+        <Annotation.Text {...CHART_COPYRIGHT}/>
         <Axis name="breadth" grid={grid}/>
         <Axis name="day" label={null}/>
         <Line shape="line" position="day*breadth" color=""/>

@@ -1,9 +1,11 @@
 import React from 'react';
 import {
+  Annotation,
   Chart,
   Line,
   Tooltip,
 } from 'bizcharts';
+import {CHART_COPYRIGHT} from "../../constants";
 
 // agencies: "10000000"
 // asOfDate: "2003-11-19"
@@ -17,7 +19,6 @@ import {
 // total: "661091816000.00"
 
 export const MarketSomaHoldChart = (props) => {
-  console.log(props.somaHolDataList)
 
   props.somaHolDataList.transform({
     type: 'fold',
@@ -47,4 +48,26 @@ export const MarketSomaHoldChart = (props) => {
     </React.Fragment>
 
   );
+}
+
+
+export const WeiChart = (props) => {
+
+  const scale = {
+    value:{
+      min: -15,
+      alias: '经济指数'
+    },
+    time:{
+      tickCount:15,
+    }
+  }
+
+  return (
+    <div>
+      <Chart padding={[10, 20, 70, 40]} scale={scale} autoFit height={300} data={props.weiDatalist.rows}>
+        <Line shape="line" position="time*value" color="type" />
+        <Annotation.Text {...CHART_COPYRIGHT}/>
+      </Chart>
+    </div>)
 }

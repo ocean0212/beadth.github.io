@@ -99,11 +99,6 @@ export const InitDataList = (srcData) => {
   }
 };
 
-export const marketSomaHoldFormat = (srcData) => {
-  console.log('func marketSomaHoldFormat')
-  var data = JSON.parse(Base64.decode(srcData.data))
-  console.log(data);
-};
 
 // 使用了 redux-thunk 之后 返回可以是一个函数
 export const getMtData = () => {

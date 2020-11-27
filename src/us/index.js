@@ -51,7 +51,7 @@ const Content = (props) => {
         <TabPane tab="市场宽度" key="content11">
           <BreadthHeatMap {...props}/>
         </TabPane>
-        <TabPane tab="经济数据" disabled key="content12">
+        <TabPane tab="经济数据" key="content12">
           <Economic/>
         </TabPane>
         <TabPane tab="市场全景" disabled key="content13">
