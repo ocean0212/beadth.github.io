@@ -33,6 +33,10 @@ def tasks():
         cf.OLI_GOLD_RATIO_URL: [cf.OLI_GOLD_RATIO_SRC_DATA, cf.OLI_GOLD_RATIO_OUTPUT_NAME],
         cf.OLI_URL: [cf.OLI_SRC_DATA, cf.OLI_OUTPUT_NAME],
         cf.GOLD_URL: [cf.GOLD_SRC_DATA, cf.GOLD_OUTPUT_NAME],
+        cf.COPPER_GOLD_RATIO_URL: [cf.COPPER_GOLD_RATIO_SRC_DATA, cf.COPPER_GOLD_RATIO_NAME],
+        cf.INTEREST_RATES_URL: [cf.INTEREST_RATES_SRC_DATA, cf.INTEREST_RATES_NAME],
+        cf.COPPER_URL: [cf.COPPER_SRC_DATA, cf.COPPER_NAME],
+        cf.GOLD_SINCE_URL: [cf.GOLD_SINCE_SRC_DATA, cf.GOLD_SINCE_NAME],
     }
     t = []
     for k,v in _t.items():
@@ -81,9 +85,42 @@ def run():
         if len(new_data) > len(src_data):
             logger.info('write data: {}'.format(i))
             write(i.file, new_data)
-        split_output(new_data, output_name_format)
+            split_output(new_data, output_name_format)
+        merge()
 
-def split_output(data, fname, y=[6,11,21,31]):
+def merge(ys=[7,]):
+    merge_dict = dict(
+        copper_gold_ratio=cf.COPPER_GOLD_RATIO_SRC_DATA,
+        interest_rates=cf.INTEREST_RATES_SRC_DATA,
+        oil_gold_ratio=cf.GOLD_SINCE_SRC_DATA,
+    )
+    years = []
+    tmp = {}
+    for i in ys:
+        r = utils.today() - relativedelta(years=i)
+        years.append(r)
+    for y in years:
+        for k,v in merge_dict.items():
+            data = read(v)
+            for item in data:
+                _t = datetime.date.fromisoformat(item['t'])
+                t = item['t']
+                if y < _t:
+                    item_dict =  tmp.get(t, {})
+                    item_dict[k] = item['v']
+                    tmp[t]= item_dict
+        _sort = sorted(tmp.items(),key=lambda x:x[0])
+        ret = []
+        for i in _sort:
+            val = i[1]
+            val['t'] = i[0]
+            ret.append(val)
+        idx = years.index(y)
+        path = os.path.join(cf.OUTPUT, 'oli_copper_gold_ratio_{}.json'.format(ys[idx]))
+        utils.save_ouput(ret, path)
+
+
+def split_output(data, fname, y=[7,]):
     # def split_output(data, fname, y=[6]):
     if not fname: return
     years = []
@@ -117,4 +154,5 @@ if __name__ == '__main__':
     # print(utils.now().date())
     # split_output('d')
     run()
+    # merge()
     # print(datetime.date.fromisoformat("2020-01-23"))
