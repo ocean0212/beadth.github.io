@@ -8,6 +8,7 @@ import config as cf
 from lib import utils
 from lib.browser import *
 from bin import newyorkfed
+from bin import oli_gold
 
 logger = logging.getLogger(__name__)
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -143,6 +144,7 @@ def run():
             utils.split_save_json(all, cf.OUTPUT, 'sp500_{}.json')
             # newyorkfed.org
             newyorkfed.bin()
+            oli_gold.bin()
             quit_browser(br)
             return 
         except Exception as e :

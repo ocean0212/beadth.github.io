@@ -13,12 +13,21 @@ DATA_US_DIR = os.path.join(BASE_DIR, 'data', 'us')
 OUTPUT = os.path.join(BASE_DIR, os.getenv("OUTPUT", 'output'))
 NEWYORKFED_SOMA_SRC_DATA = os.path.join(DATA_US_DIR, 'newyorkfed_some_hold.json')
 NEWYORKFED_WEI_SRC_DATA = os.path.join(DATA_US_DIR, 'newyorkfed_wei.json')
+OLI_GOLD_RATIO_SRC_DATA = os.path.join(DATA_US_DIR, 'oil_gold_ratio.json')
+OLI_SRC_DATA = os.path.join(DATA_US_DIR, 'oli.json')
+GOLD_SRC_DATA = os.path.join(DATA_US_DIR, 'gold.json')
 
 NEWYORKFED_SOMA_HOLD_URL = "https://markets.newyorkfed.org/read?productCode=30&startDt={}&endDt={}&query=summary&format=json"
 NEWYORKFED_WEI_URL = "https://www.newyorkfed.org/medialibrary/research/interactives/data//wei_data.csv"
+OLI_GOLD_RATIO_URL = "https://www.longtermtrends.net/data-oil-gold-ratio/"
+OLI_URL = "https://www.longtermtrends.net/data-gold2/"
+GOLD_URL = "https://www.longtermtrends.net/data-oil/"
 
 NEWYORKFED_HOLD_OUTPUT_NAME = 'newyorkfed_makert_hold.json'
 NEWYORKFED_WEI_NAME = 'newyorkfed_wei.json'
+OLI_OUTPUT_NAME = os.path.join(OUTPUT, 'oli.json')
+OLI_GOLD_RATIO_OUTPUT_NAME = os.path.join(OUTPUT, 'oil_gold_ratio.json')
+GOLD_OUTPUT_NAME = os.path.join(OUTPUT, 'gold.json')
 
 LOOP_GAP = int(os.getenv("LOOP_GAP", 2))
 BROWSER_NAME = os.getenv("BROWSER_NAME", "chrome")

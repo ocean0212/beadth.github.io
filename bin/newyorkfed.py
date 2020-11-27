@@ -3,6 +3,7 @@ import urllib3
 import os
 import csv
 import requests
+import logging
 from datetime import date
 from dateutil.relativedelta import relativedelta
 from retrying import retry
@@ -10,7 +11,7 @@ from tempfile import TemporaryFile  # , NamedTemporaryFile
 
 import config as cf
 from lib import utils
-from app import logger
+logger = logging.getLogger(__name__)
 
 
 urllib3.disable_warnings()
@@ -104,8 +105,13 @@ def market_some_hold(url):
     return ALL_DICT
 
 def bin():
-    market_some_hold(cf.NEWYORKFED_SOMA_HOLD_URL)
-    wei(cf.NEWYORKFED_WEI_URL)
+    current = utils.now()
+    close_time = utils.now().replace(hour=16, minute=30, second=0)
+    if current > close_time:
+        logger.info('IS NEWYORKFED TIME. RUN...')
+        market_some_hold(cf.NEWYORKFED_SOMA_HOLD_URL)
+        wei(cf.NEWYORKFED_WEI_URL)
+    logger.info('NOT NEWYORKFED TIME.')
 
 if __name__ == '__main__':
     bin()
