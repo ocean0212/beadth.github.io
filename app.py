@@ -112,6 +112,7 @@ def quit_browser(br):
 
 @utils.extract_context_info
 def main():
+    logger.info(sys.version)
     logger.info("start... today: {} new: {}".format(utils.today().isoformat(), utils.now().isoformat()))
     utils.init_sentry()
     if utils.is_market_open():

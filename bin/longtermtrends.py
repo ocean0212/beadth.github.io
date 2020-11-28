@@ -6,6 +6,7 @@ import requests
 import logging
 import base64
 import datetime
+from datetime import date
 from dateutil.relativedelta import relativedelta
 from retrying import retry
 from collections import namedtuple
@@ -79,7 +80,7 @@ def run():
         output_name_format = name + "_{}." + suffix
         rep = get(i.url)
         logger.info(i)
-        logger.info(rep.json())
+        logger.info(rep.text[:100])
         new_data = bs64(rep.json())
         src_data = read(i.file)
         if len(new_data) > len(src_data):
@@ -88,11 +89,11 @@ def run():
             split_output(new_data, output_name_format)
         merge()
 
-def merge(ys=[7,]):
+def merge(ys=[5,]):
     merge_dict = dict(
         copper_gold_ratio=cf.COPPER_GOLD_RATIO_SRC_DATA,
         interest_rates=cf.INTEREST_RATES_SRC_DATA,
-        oil_gold_ratio=cf.GOLD_SINCE_SRC_DATA,
+        oil_gold_ratio=cf.OLI_GOLD_RATIO_SRC_DATA,
     )
     years = []
     tmp = {}
@@ -103,9 +104,10 @@ def merge(ys=[7,]):
         for k,v in merge_dict.items():
             data = read(v)
             for item in data:
-                _t = datetime.date.fromisoformat(item['t'])
+                _t = datetime.datetime.strptime(item['t'], "%Y-%m-%d")
+                _t = date(year=_t.year, month=_t.month, day=_t.day)
                 t = item['t']
-                if y < _t:
+                if y <= _t:
                     item_dict =  tmp.get(t, {})
                     item_dict[k] = item['v']
                     tmp[t]= item_dict
@@ -120,7 +122,7 @@ def merge(ys=[7,]):
         utils.save_ouput(ret, path)
 
 
-def split_output(data, fname, y=[7,]):
+def split_output(data, fname, y=[5,]):
     # def split_output(data, fname, y=[6]):
     if not fname: return
     years = []
@@ -130,8 +132,9 @@ def split_output(data, fname, y=[7,]):
     for i in years:
         c = []
         for item in data:
-            _t = datetime.date.fromisoformat(item['t'])
-            if i < _t:
+            _t = datetime.datetime.strptime(item['t'], "%Y-%m-%d")
+            _t = date(year=_t.year, month=_t.month, day=_t.day)
+            if i <= _t:
                 c.append(item)
         idx = years.index(i)
         file_name = fname.format(y[idx])
@@ -153,6 +156,8 @@ if __name__ == '__main__':
     # bin()
     # print(utils.now().date())
     # split_output('d')
-    run()
-    # merge()
+    # run()
+    merge()
     # print(datetime.date.fromisoformat("2020-01-23"))
+    # aa= datetime.datetime.fromisoformat("2020-01-23")
+
