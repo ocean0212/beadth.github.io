@@ -40,7 +40,6 @@ const BreadthLeftChart = (props) => {
     height={3000}
     animate={true}
     data={props.data}
-    autoFit
     forceFit={true}
   >
 
@@ -125,7 +124,6 @@ const BreadthRightChart = (props) => {
     scale={scale}
     height={3000}
     data={props.data}
-    autoFit
     forceFit={true}
   >
 
