@@ -1,0 +1,27 @@
+{
+  "code": 1000,
+  "data": [
+    {"t": "2020-11-29", "amount": 6, "currency": "¥", "source": "WeChat Pay", "loss": "0", "status": "success"},
+    {"t": "2020-11-29", "amount": 6.66, "currency": "¥", "source": "WeChat Pay", "loss": "0", "status": "success"},
+    {"t": "2020-11-29", "amount": 50, "currency": "¥", "source": "WeChat Pay", "loss": "0", "status": "success"},
+    {"t": "2020-11-29", "amount": 20, "currency": "¥", "source": "WeChat Pay", "loss": "0", "status": "success"},
+    {"t": "2020-11-25", "amount": 88, "currency": "$", "source": "Ali Pay", "loss": "0", "status": "success"},
+    {"t": "2020-11-25", "amount": 6.66, "currency": "¥", "source": "Ali Pay", "loss": "0", "status": "success"},
+    {"t": "2020-11-25", "amount": 66.66, "currency": "¥", "source": "WeChat Pay", "loss": "0", "status": "success"},
+    {"t": "2020-11-24", "amount": 20, "currency": "¥", "source": "Ali Pay", "loss": "0", "status": "success"},
+    {"t": "2020-11-24", "amount": 5, "currency": "¥", "source": "WeChat Pay", "loss": "0", "status": "success"},
+    {"t": "2020-11-23", "amount": 50, "currency": "¥", "source": "Ali Pay", "loss": "0", "status": "success"},
+    {"t": "2020-11-23", "amount": 20, "currency": "¥", "source": "WeChat Pay", "loss": "0", "status": "success"},
+    {"t": "2020-11-23", "amount": 100, "currency": "$", "source": "Paypal", "loss": "0", "status": "success"},
+    {"t": "2020-11-21", "amount": 2, "currency": "$", "source": "Paypal", "loss": "0", "status": "peading"},
+    {"t": "2020-11-20", "amount": 20, "currency": "$", "source": "Paypal", "loss": "0", "status": "peading"},
+    {"t": "2020-11-20", "amount": 10, "currency": "$", "source": "Paypal", "loss": "0", "status": "peading"},
+    {"t": "2020-11-19", "amount": 20.19, "currency": "$", "source": "Paypal", "loss": "1.19", "status": "success"},
+    {"t": "2020-11-19", "amount": 10, "currency": "$", "source": "Paypal", "loss": "0", "status": "peading"},
+    {"t": "2020-11-19", "amount": 10, "currency": "$", "source": "Paypal", "loss": "0", "status": "peading"},
+    {"t": "2020-11-19", "amount": 10, "currency": "$", "source": "Paypal", "loss": "0", "status": "success"},
+    {"t": "2020-11-17", "amount": 8.88, "currency": "$", "source": "Paypal", "loss": "0.56", "status": "success"},
+    {"t": "2020-11-13", "amount": 50, "currency": "$", "source": "Paypal", "loss": "0", "status": "success"}
+  ],
+  "last_time": "2020-11-29"
+}

@@ -18,6 +18,8 @@ import {CHART_COPYRIGHT} from "../../constants";
 // tipsInflationCompensation: "1621412000"
 // total: "661091816000.00"
 
+// TODO https://github.com/beadth/beadth.github.io/issues/5
+// 复现方式： 同目录 index.js -> line: 20 -> 删除 disabled
 export const MarketSomaHoldChart = (props) => {
 
   props.somaHolDataList.transform({

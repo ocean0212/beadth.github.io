@@ -19,7 +19,7 @@ import {
 } from "antd";
 
 import {
-  ALI_PAY_QR, BannerData,
+  ALI_PAY_QR,
   DOMAIN_NAME_URL,
   IS_LOADING_STRING, LEI_SITE,
   PAYPAL_PAY_QR,
@@ -225,7 +225,7 @@ export const ADBanner = (props) => {
     <Row justify="center" align="top">
       <Col xs={{span: 24}} sm={{span: 19}} md={{span: 20}} lg={{span: 16}} xl={{span: 16}} align="top">
         <h2 style={contentStyle} >
-          <a style={contentStyle} rel={"noreferrer"} href={BannerData[0].url} target="_blank" title={BannerData[0].desc}>{BannerData[0].text} : {BannerData[0].title}</a>
+          <a style={contentStyle} rel={"noreferrer"} href={"/"} title={""}>虚位以待..</a>
         </h2>
       </Col>
     </Row>
