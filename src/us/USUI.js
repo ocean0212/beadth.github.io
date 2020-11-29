@@ -58,7 +58,8 @@ export const Headers = (props) => {
           <Row justify="center" align="top">
             <Title>加入</Title>
             <Paragraph>
-              目前急缺前端工程师，vue/react 均可, 请不要犹豫，直接发送邮件
+              目前急缺前端工程师，vue/react 均可, 请不要犹豫，直接发送邮件或者
+              <a target={"_blank"} rel={"noreferrer"} href="https://forms.gle/Hgm987JQGVntnNe98"> 填写表单</a>
             </Paragraph>
             <Paragraph copyable={{ tooltips: false }}>kenteb@outlook.com</Paragraph>
 
