@@ -11,6 +11,7 @@ from bin import newyorkfed
 from bin import longtermtrends
 from bin import cpi
 from bin import treasury
+from bin import federal_founds_rate
 
 logger = logging.getLogger(__name__)
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -149,6 +150,7 @@ def run():
             newyorkfed.bin()
             longtermtrends.bin()
             cpi.bin()
+            federal_founds_rate.bin()
             treasury.bin()
             quit_browser(br)
             return 
