@@ -26,6 +26,9 @@ const BreadthLeftChart = (props) => {
       type: 'cat',
       values: props.days || [],
     },
+    breadth: {
+      alias: '行业宽度'
+    },
     sales: {
       nice: true,
     }
@@ -43,37 +46,8 @@ const BreadthLeftChart = (props) => {
     forceFit={true}
   >
 
-    <Axis
-      label={codeLabel}
-      name={'name'}
-      position='top'
-
-      tickLine={null}
-      grid={{
-        alignTick: false,
-        line: {
-          style: {
-            lineWidth: 1,
-            lineDash: null,
-            stroke: '#f0f0f0',
-          },
-        },
-      }}
-    />
-    <Axis
-      name={'day'}
-      title={null}
-      grid={{
-        alignTick: false,
-        line: {
-          style: {
-            lineWidth: 1,
-            lineDash: null,
-            stroke: '#f0f0f0',
-          },
-        },
-      }}
-    />
+    <Axis label={codeLabel} name={'name'} position='top'/>
+    <Axis name={'day'}/>
     <Legend position='left-top' offsetY={100} visible={false}/>
 
     <Tooltip shared showMarkers={false}/>
@@ -110,6 +84,9 @@ const BreadthRightChart = (props) => {
       type: 'cat',
       values: props.days || [],
     },
+    breadth: {
+      alias: '市场宽度'
+    },
     sales: {
       nice: true,
     }
@@ -127,37 +104,9 @@ const BreadthRightChart = (props) => {
     forceFit={true}
   >
 
-    <Axis
-      name={'name'}
-      position='top'
-      label={codeLabel}
-
-      tickLine={null}
-      grid={{
-        alignTick: false,
-        line: {
-          style: {
-            lineWidth: 1,
-            lineDash: null,
-            stroke: '#f0f0f0',
-          },
-        },
-      }}
+    <Axis name={'name'} position='top' label={codeLabel}
     />
-    <Axis
-      name={'day'}
-      title={null}
-      visible={false}
-      grid={{
-        alignTick: false,
-        line: {
-          style: {
-            lineWidth: 1,
-            lineDash: null,
-            stroke: '#f0f0f0',
-          },
-        },
-      }}
+    <Axis name={'day'} title={null} visible={false}
     />
     <Tooltip shared showMarkers={false}/>
     <Legend position='right-top' offsetY={100} visible={false}/>
@@ -172,10 +121,6 @@ const BreadthRightChart = (props) => {
           shadowColor: 'rgba(0, 0, 0, .45)',
         },
       }]}
-      // style={{
-      //   lineWidth: 0,
-      //   stroke: '#fff',
-      // }}
     >
 
     </Polygon>
@@ -207,6 +152,14 @@ const BreadthLineChart = (props) => {
     smooth: false
   }
 
+  const scale = {
+    breadth: {
+      mix: 0,
+      max: 1100,
+      alias: '市场宽度'
+    }
+  }
+
   return (
     <div>
       <h4 className='main-title' style={styles.mainTitle}>
@@ -215,7 +168,7 @@ const BreadthLineChart = (props) => {
       <h5 className='sub-title' style={styles.subTitle}>
         {props.date}
       </h5>
-      <Chart scale={{breadth: {min: 0, max: 1000}}} padding={[10, 20, 38, 40]} autoFit height={220} data={props.data}>
+      <Chart scale={scale} padding={[10, 20, 38, 40]} autoFit height={220} data={props.data}>
         <Annotation.Text {...CHART_COPYRIGHT}/>
         <Axis name="breadth" grid={grid}/>
         <Axis name="day" label={null}/>
