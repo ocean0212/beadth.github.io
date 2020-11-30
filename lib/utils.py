@@ -3,6 +3,7 @@ import json
 import os
 import copy
 import datetime
+import requests
 import logging
 from uuid import uuid4
 from functools import wraps, partial
@@ -193,7 +194,7 @@ def save_ouput(data, file_name):
     f.close()
     return
 
-def split_save_json(data, f=None, ft=None, sp=[30,100,360]):
+def split_save_json(data, f=None, ft=None, sp=[1,30,100,360]):
     li = sort_data(data)
     for i in sp:
         last_sp = copy.deepcopy(li[-i:])
@@ -276,6 +277,31 @@ def init_sentry():
         config.SENTRY_SDN,
         traces_sample_rate=1.0,
     )
+
+def header():
+    return {'Accept': '*/*',
+            'Accept-Encoding': 'gzip, deflate, sdch',
+            'Accept-Language': 'en-US,en;q=0.8',
+            'Cache-Control': 'max-age=0',
+            'User-Agent': "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36",
+            }
+
+@retry(stop_max_attempt_number=20, wait_fixed=3)
+def get(url):
+    rep = requests.get(url, verify=False, headers=header())
+    return rep
+
+def write(f,data):
+    _f = open(f, 'w')
+    json.dump(data, _f)
+    _f.flush()
+    _f.close()
+
+def read(src):
+    f = open(src, 'r')
+    _dt = json.load(f)
+    f.close()
+    return _dt
 
 # def is_summer():
 #     today = datetime.datetime.today()

@@ -9,6 +9,8 @@ from lib import utils
 from lib.browser import *
 from bin import newyorkfed
 from bin import longtermtrends
+from bin import cpi
+from bin import treasury
 
 logger = logging.getLogger(__name__)
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -146,6 +148,8 @@ def run():
             # newyorkfed.org
             newyorkfed.bin()
             longtermtrends.bin()
+            cpi.bin()
+            treasury.bin()
             quit_browser(br)
             return 
         except Exception as e :

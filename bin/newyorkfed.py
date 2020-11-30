@@ -80,9 +80,10 @@ def market_some_hold(url):
     if rep.status_code != 200: return
     rep_data = rep.json()
     summary = rep_data['soma']['summary']
-
+    # 没有数据
     if len(summary) == 0:
         return
+    # 读取以前的数据
     tf = open(cf.NEWYORKFED_SOMA_SRC_DATA, 'r')
     ALL_DICT = json.load(tf)
     tf.close()
