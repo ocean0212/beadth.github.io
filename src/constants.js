@@ -1,6 +1,8 @@
 export const ALI_PAY_QR = "/img/AliPayQR.png"
 export const WECHAT_PAY_QR = "/img/WeChatPayQR.png"
 export const PAYPAL_PAY_QR = "/img/PaypalQR.png"
+export const BTC_QR = "/img/BTCQR.png"
+export const BTC_WALLET = "38q6hQX3BhMpkDyQy2aVc1n3FnRS4RXqb5"
 export const ROUTER_PATH = {
   INDEX: '/',
   ECONOMIC:'/economic',

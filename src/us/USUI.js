@@ -19,7 +19,7 @@ import {
 } from "antd";
 
 import {
-  ALI_PAY_QR,
+  ALI_PAY_QR, BTC_QR, BTC_WALLET,
   DOMAIN_NAME_URL,
   IS_LOADING_STRING, LEI_SITE,
   PAYPAL_PAY_QR,
@@ -28,9 +28,10 @@ import {
   WECHAT_PAY_QR
 } from "../constants";
 
+const { Title, Paragraph } = Typography;
+
 export const Headers = (props) => {
   const {Header} = Layout;
-  const { Title, Paragraph } = Typography;
   const [visible, setVisible] = useState(false);
   const showDrawer = () => {
     setVisible(true);
@@ -59,7 +60,7 @@ export const Headers = (props) => {
             <Title>加入</Title>
             <Paragraph>
               目前急缺前端工程师，vue/react 均可, 请不要犹豫，直接发送邮件或者
-              <a target={"_blank"} rel={"noreferrer"} href="https://forms.gle/Hgm987JQGVntnNe98"> 填写表单</a>
+              <a target={"_blank"} rel={"noreferrer"} href="https://forms.gle/EFfrjG9xAbGdGHwk9"> 填写表单</a>
             </Paragraph>
             <Paragraph copyable={{ tooltips: false }}>kenteb@outlook.com</Paragraph>
 
@@ -148,20 +149,29 @@ export const Donate = (props) => {
             />
           </a>
           <Image
-            width={200}
+            width={180}
             src={PAYPAL_PAY_QR}
             alt={"点击跳转到Paypal.me"}
           />
           <Divider plain>支付宝</Divider>
           <Image
-            width={200}
+            width={180}
             src={ALI_PAY_QR}
           />
           <Divider plain>微信</Divider>
           <Image
-            width={200}
+            width={180}
             src={WECHAT_PAY_QR}
           />
+          <Divider plain>Bitcoin Donations</Divider>
+          <Image
+            width={180}
+            src={BTC_QR}
+          />
+          <Paragraph
+            copyable={{ tooltips: "点击复制" , text: BTC_WALLET}}
+            type={'success'}
+            ellipsis={true}>BTC捐助地址</Paragraph>
         </Row>
 
       </Drawer>
