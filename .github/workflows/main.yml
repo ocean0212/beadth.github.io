@@ -56,10 +56,10 @@ jobs:
       - name: Show data files
         run: tree .
 
-      - name: cp
+      - name: cp to opt
         run:  |
           mkdir /opt/data
-          cp output/* /opt/data
+          cp -r output/* /opt/data
           
       - name: Show data
         run: |
@@ -85,8 +85,8 @@ jobs:
 
       - name: cp site
         run: |
-          rm -rf public/us/*.json
-          cp -rf /opt/data/*.json public/us
+          rm -rf public/us/*
+          cp -rf /opt/data/* public/us
           ls -l public/us
           tree .
           git branch
