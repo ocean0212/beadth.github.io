@@ -19,7 +19,6 @@ const BreadthLeftChart = (props) => {
   const scale = {
     name: {
       type: 'cat',
-      // values: ['SPX','COM','CND','CNS','ENE','FIN','HLT','IND','MAT','REI','TEC','UTL','TOTAL'],
       values: ['SPX', 'COM', 'CND', 'CNS', 'ENE', 'FIN', 'HLT', 'IND', 'MAT', 'REI', 'TEC', 'UTL'],
     },
     day: {
@@ -53,7 +52,6 @@ const BreadthLeftChart = (props) => {
     <Tooltip shared showMarkers={false}/>
     <Polygon
       position={'name*day'}
-      // color={['sales', '#BAE7FF-#1890FF-#0050B3']}
       color={['breadth', '#FB5050-#FFFFFF-#009966']}
       label={['breadth', {
         offset: -2,
@@ -63,10 +61,6 @@ const BreadthLeftChart = (props) => {
           shadowColor: 'rgba(0, 0, 0, .45)',
         },
       }]}
-      // style={{
-      //   lineWidth: 0,
-      //   stroke: '#fff',
-      // }}
     >
 
     </Polygon>
