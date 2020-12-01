@@ -63,6 +63,7 @@ def bin():
     if current > close_time:
         logger.info('IS TREASURY TIME. RUN...')
         run()
+        logger.info('IS TREASURY TIME. END.')
         return
     logger.info('NOT TREASURY TIME.')
 

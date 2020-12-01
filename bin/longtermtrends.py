@@ -1,8 +1,6 @@
 import json
 import urllib3
 import os
-import csv
-import requests
 import logging
 import base64
 import datetime
@@ -20,15 +18,6 @@ logger = logging.getLogger(__name__)
 
 TASK = namedtuple("task", ["url", "file", "output"])
 
-
-def header():
-    return {'Accept': '*/*',
-            'Accept-Encoding': 'gzip, deflate, sdch',
-            'Accept-Language': 'en-US,en;q=0.8',
-            'Cache-Control': 'max-age=0',
-            'User-Agent': "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36",
-            }
-
 def tasks():
     _t = {
         cf.OLI_GOLD_RATIO_URL: [cf.OLI_GOLD_RATIO_SRC_DATA, cf.OLI_GOLD_RATIO_OUTPUT_NAME],
@@ -45,10 +34,6 @@ def tasks():
         t.append(task)
     return t
 
-@retry(stop_max_attempt_number=20, wait_fixed=3)
-def get(url):
-    rep = requests.get(url, verify=False, headers=header())
-    return rep
 
 def bs64(data):
     res = []
@@ -60,32 +45,20 @@ def bs64(data):
         res.append({'t':str(key, encoding='utf8'),'v': float(val) })
     return res
 
-def read(src):
-    f = open(src, 'r')
-    _dt = json.load(f)
-    f.close()
-    return _dt
-
-def write(f,data):
-    _f = open(f, 'w')
-    json.dump(data, _f)
-    _f.flush()
-    _f.close()
-
 def run():
     t = tasks()
     for i in t:
         path, file_name = os.path.split(i.file)
         name, suffix = file_name.split('.')
         output_name_format = name + "_{}." + suffix
-        rep = get(i.url)
+        rep = utils.get(i.url)
         logger.info(i)
         logger.info(rep.text[:100])
         new_data = bs64(rep.json())
-        src_data = read(i.file)
+        src_data = utils.read(i.file)
         if len(new_data) > len(src_data):
             logger.info('write data: {}'.format(i))
-            write(i.file, new_data)
+            utils.write(i.file, new_data)
             split_output(new_data, output_name_format)
         merge()
 
@@ -102,7 +75,7 @@ def merge(ys=[5,]):
         years.append(r)
     for y in years:
         for k,v in merge_dict.items():
-            data = read(v)
+            data = utils.read(v)
             for item in data:
                 _t = datetime.datetime.strptime(item['t'], "%Y-%m-%d")
                 _t = date(year=_t.year, month=_t.month, day=_t.day)

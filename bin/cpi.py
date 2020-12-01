@@ -20,20 +20,6 @@ urllib3.disable_warnings()
 logger = logging.getLogger(__name__)
 
 
-def header():
-    return {'Accept': '*/*',
-            'Accept-Encoding': 'gzip, deflate, sdch',
-            'Accept-Language': 'en-US,en;q=0.8',
-            'Cache-Control': 'max-age=0',
-            'User-Agent': "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36",
-            }
-
-@retry(stop_max_attempt_number=20, wait_fixed=3)
-def get(url):
-    logger.info('get request start.')
-    rep = requests.get(url, verify=False, headers=header())
-    return rep
-
 def cpi_format(data):
     res = {}
     for i in data:
@@ -67,7 +53,7 @@ def split_data(ys=[5,]):
 
 
 def run():
-    rep = get(cf.CPI_URL)
+    rep = utils.get(cf.CPI_URL)
     raw_data = rep.json()['chart_data'][0][0]['raw_data']
     ret = cpi_format(raw_data)
     src_data = utils.read(cf.CPI_SRC_DATA)
@@ -77,7 +63,7 @@ def run():
         src_data[k] = v
     utils.write(cf.CPI_SRC_DATA, src_data)
     split_data()
-    logger.info('run end.')
+    logger.info('IS CPI TIME. END')
 
 def bin():
     current = utils.now()

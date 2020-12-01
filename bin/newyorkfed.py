@@ -2,7 +2,6 @@ import json
 import urllib3
 import os
 import csv
-import requests
 import logging
 from datetime import date
 from dateutil.relativedelta import relativedelta
@@ -17,19 +16,6 @@ logger = logging.getLogger(__name__)
 urllib3.disable_warnings()
 
 
-def header():
-    return {'Accept': '*/*',
-            'Accept-Encoding': 'gzip, deflate, sdch',
-            'Accept-Language': 'en-US,en;q=0.8',
-            'Cache-Control': 'max-age=0',
-            'User-Agent': "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36",
-            }
-
-@retry(stop_max_attempt_number=20, wait_fixed=3)
-def get(url):
-    rep = requests.get(url, verify=False, headers=header())
-    return rep
-
 def day_range():
     start = date.today() - relativedelta(days=3)
     end = date.today() + relativedelta(days=1)
@@ -39,7 +25,7 @@ def wei(url):
     logger.info("start wei index data ...")
     # ['Date', 'Preliminary Estimate', 'First Revision', 'Second Revision', 'Final']
     _tmp = "tmp.csv"
-    rep = get(url)
+    rep = utils.get(url)
     f = open(_tmp, 'w')
     f.write(rep.text)
     f.flush()
