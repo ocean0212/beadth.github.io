@@ -59,7 +59,7 @@ jobs:
       - name: cp to opt
         run:  |
           mkdir /opt/data
-          cp -r output/* /opt/data
+          cp -rf output/* /opt/data
           
       - name: Show data
         run: |
