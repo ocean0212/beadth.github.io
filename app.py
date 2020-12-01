@@ -11,6 +11,8 @@ from bin import longtermtrends
 from bin import cpi
 from bin import treasury
 from bin import breadth
+from bin import federal_founds_rate
+from bin import us_etf
 
 logger = logging.getLogger(__name__)
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -64,6 +66,10 @@ def run():
             longtermtrends.bin()
             cpi.bin()
             treasury.bin()
+            federal_founds_rate.bin()
+
+            # etf
+            us_etf.bin()
 
             breadth.quit_browser(br)
             return 

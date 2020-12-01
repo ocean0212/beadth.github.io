@@ -10,7 +10,11 @@ WEBDRIVER_URL = os.getenv("WEBDRIVER_URL", "http://127.0.0.1:4444/wd/hub")
 DEBUG = int(os.getenv("DEBUG", 0))
 DATA_DIR = os.path.join(BASE_DIR, 'data')
 DATA_US_DIR = os.path.join(BASE_DIR, 'data', 'us')
+DATA_US_ETF_DIR = os.path.join(BASE_DIR, 'data', 'us', 'etf')
+ALL_ETF_DIR = os.path.join(BASE_DIR, 'data', 'us', 'etf', "ALL.json")
 OUTPUT = os.path.join(BASE_DIR, os.getenv("OUTPUT", 'output'))
+US_ETF_OUTPUT = os.path.join(BASE_DIR, os.getenv("OUTPUT", 'output'), 'etf')
+ALL_ETF_OUTPUT = os.path.join(US_ETF_OUTPUT, "ALL.json")
 NEWYORKFED_SOMA_SRC_DATA = os.path.join(DATA_US_DIR, 'newyorkfed_some_hold.json')
 NEWYORKFED_WEI_SRC_DATA = os.path.join(DATA_US_DIR, 'newyorkfed_wei.json')
 OLI_GOLD_RATIO_SRC_DATA = os.path.join(DATA_US_DIR, 'oil_gold_ratio.json')
@@ -62,7 +66,85 @@ US_TIMEZONE = timezone('America/New_York')
 
 SENTRY_SDN = os.getenv("SENTRY_SDN", "https://d9043653a7fc461daa61c8905e960c23@o356170.ingest.sentry.io/5440867")
 
+ETF_LIST = [
+    'VTI',
+    'DIA',
+    'OEF',
+    'MDY',
+    'SPY',
+    'RSP',
+    'QQQ',
+    'QTEC',
+    'IWB',
+    'IWM',
+    'MTUM',
+    'VLUE',
+    'QUAL',
+    'USMV',
+    'IWF',
+    'IWD',
+    'IVW',
+    'IVE',
+    'MOAT',
+    'FFTY',
+    'IBUY',
+    'HACK',
+    'SKYY',
+    'IPAY',
+    'FINX',
+    'XT',
+    'ARKK',
+    'BOTZ',
+    'MOO',
+    'ARKG',
+    'MJ',
+    'ARKW',
+    'ARKQ',
+    'PBW',
+    'BLOK',
+    'SNSR',
 
+    'XLC',
+    'XLY',
+    'XHB',
+    'XRT',
+    'XLP',
+    'XLE',
+    'XOP',
+    'OIH',
+    'TAN',
+    'URA',
+    'XLF',
+    'KBE',
+    'KIE',
+    'IAI',
+    'XLV',
+    'IBB',
+    'IHI',
+    'IHF',
+    'XPH',
+    'XLI',
+    'ITA',
+    'IYT',
+    'JETS',
+    'XLB',
+    'GDX',
+    'XME',
+    'LIT',
+    'REMX',
+    'IYM',
+    'XLRE',
+    'VNQ',
+    'VNQI',
+    'REM',
+    'XLK',
+    'VGT',
+    'FDN',
+    'SOCL',
+    'IGV',
+    'SOXX',
+    'XLU',
+]
 
 if __name__ == '__main__':
     # timezone('Asia/Shanghai')

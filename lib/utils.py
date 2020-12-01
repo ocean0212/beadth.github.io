@@ -240,7 +240,7 @@ def get(url):
 
 def write(f,data):
     _f = open(f, 'w')
-    json.dump(data, _f)
+    json.dump(data, _f, default=ToJsonEncoder)
     _f.flush()
     _f.close()
 
