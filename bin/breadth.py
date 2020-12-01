@@ -14,7 +14,7 @@ IndexInfo = namedtuple("index_info", ["code", "url", "tv_index"])
 IndexInfoHandle = namedtuple("index_info_handle", ["code", "url", "handle", "tv_index"])
 
 
-index_dict = [
+INDEX_DICT = [
     {"tv_index": "INDEX:SLTW", "code": "COM"},
     {"tv_index": "INDEX:SYTW", "code": "CND"},
     {"tv_index": "INDEX:SPTW", "code": "CNS"},
@@ -31,16 +31,18 @@ index_dict = [
 
 INDEXS = []
 
-def tasks():
-    for item in index_dict:
+def gtasks():
+    for item in INDEX_DICT:
         code = item["tv_index"].replace(":", "-")
         url = cf.BASE_URL + code
         index = IndexInfo(tv_index=item["tv_index"], url=url, code=item['code'])
         INDEXS.append(index)
+    return INDEXS
 
 @utils.extract_context_info
 def start(br):
-    for index, item in enumerate(INDEXS):
+    tasks = gtasks()
+    for index, item in enumerate(tasks):
         if index == 0:
             get_url(br, item)
         else:
