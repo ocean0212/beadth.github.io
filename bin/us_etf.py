@@ -83,7 +83,7 @@ def run():
         if k in src_data: continue
         logger.info("NEW DATA: {}".format(k))
         src_data[k]=v
-    utils.write(config.DATA_US_ETF_DIR, src_data)
+    utils.write(config.ALL_ETF_DIR, src_data)
     all_output(src_data, "ALL")
 
 def bin():
