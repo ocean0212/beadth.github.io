@@ -17,7 +17,7 @@ urllib3.disable_warnings()
 
 
 def day_range():
-    start = date.today() - relativedelta(days=3)
+    start = date.today() - relativedelta(days=9)
     end = date.today() + relativedelta(days=1)
     return start, end
 
@@ -101,7 +101,8 @@ def bin():
     logger.info('NOT NEWYORKFED TIME.')
 
 if __name__ == '__main__':
-    bin()
+    # bin()
+    market_some_hold(cf.NEWYORKFED_SOMA_HOLD_URL)
 
 #
 # r = {}
