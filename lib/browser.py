@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium import webdriver
+from retrying import retry
 # disable https ssl safe warning
 from urllib3.exceptions import InsecureRequestWarning
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
@@ -28,6 +29,7 @@ def config():
     }
     return config
 
+@retry(stop_max_attempt_number=3, wait_fixed=60*3)
 def createInstance(module_name, class_name, window_width=960, window_high=600, *args, **kwargs):
     '''
     create user input browser object ??????????????

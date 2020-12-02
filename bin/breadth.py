@@ -32,6 +32,8 @@ INDEX_DICT = [
 INDEXS = []
 
 def gtasks():
+    if len(INDEX_DICT) > 12:
+        return INDEXS
     for item in INDEX_DICT:
         code = item["tv_index"].replace(":", "-")
         url = cf.BASE_URL + code

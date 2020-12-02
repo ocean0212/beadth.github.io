@@ -61,7 +61,7 @@ def market_some_hold(url):
     start,end = day_range()
     url = url.format(start, end)
 
-    rep = get(url)
+    rep = utils.get(url)
     logger.info("NEWYORKFED: code:{} data: {}".format(rep.status_code, rep.text))
     if rep.status_code != 200: return
     rep_data = rep.json()
