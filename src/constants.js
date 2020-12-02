@@ -55,3 +55,103 @@ export const CHART_COPYRIGHT = {
     fontSize: 16,
   },
 }
+export const US_ALL_ETF = [
+  'VTI',
+  'DIA',
+  'OEF',
+  'MDY',
+  'SPY',
+  'RSP',
+  'QQQ',
+  'QTEC',
+  'IWB',
+  'IWM',
+  'MTUM',
+  'VLUE',
+  'QUAL',
+  'USMV',
+  'IWF',
+  'IWD',
+  'IVW',
+  'IVE',
+  'MOAT',
+  'FFTY',
+  'IBUY',
+  'HACK',
+  'SKYY',
+  'IPAY',
+  'FINX',
+  'XT',
+  'ARKK',
+  'BOTZ',
+  'MOO',
+  'ARKG',
+  'MJ',
+  'ARKW',
+  'ARKQ',
+  'PBW',
+  'BLOK',
+  'SNSR',
+  'XLC',
+  'XLY',
+  'XHB',
+  'XRT',
+  'XLP',
+  'XLE',
+  'XOP',
+  'OIH',
+  'TAN',
+  'URA',
+  'XLF',
+  'KBE',
+  'KIE',
+  'IAI',
+  'XLV',
+  'IBB',
+  'IHI',
+  'IHF',
+  'XPH',
+  'XLI',
+  'ITA',
+  'IYT',
+  'JETS',
+  'XLB',
+  'GDX',
+  'XME',
+  'LIT',
+  'REMX',
+  'IYM',
+  'XLRE',
+  'VNQ',
+  'VNQI',
+  'REM',
+  'XLK',
+  'VGT',
+  'FDN',
+  'SOCL',
+  'IGV',
+  'SOXX',
+  'XLU',
+]
+
+export const US_ETF_BROAD_MARKET = US_ALL_ETF.slice(0,10)
+export const US_ETF_FACTORS = US_ALL_ETF.slice(10,14)
+export const US_ETF_GROWTH_OR_VALUE = US_ALL_ETF.slice(14,18)
+export const US_ETF_THEMATIC = US_ALL_ETF.slice(18,36)
+
+export const US_ETF_COM = US_ALL_ETF.slice(36,37)
+export const US_ETF_CON_CNS = US_ALL_ETF.slice(37,41)
+export const US_ETF_ENE = US_ALL_ETF.slice(41,46)
+export const US_ETF_FIN = US_ALL_ETF.slice(46,50)
+export const US_ETF_HLT = US_ALL_ETF.slice(50,55)
+export const US_ETF_IND = US_ALL_ETF.slice(55,59)
+export const US_ETF_MAT = US_ALL_ETF.slice(59,65)
+export const US_ETF_REL = US_ALL_ETF.slice(65,69)
+export const US_ETF_TEC = US_ALL_ETF.slice(69,75)
+export const US_ETF_UTL = US_ALL_ETF.slice(75)
+
+export const US_ETF_ALL_LIST = [
+  US_ETF_BROAD_MARKET, US_ETF_FACTORS, US_ETF_GROWTH_OR_VALUE, US_ETF_THEMATIC,
+  US_ETF_COM, US_ETF_CON_CNS, US_ETF_ENE, US_ETF_FIN, US_ETF_HLT,US_ETF_IND, US_ETF_MAT,
+  US_ETF_REL, US_ETF_TEC, US_ETF_UTL
+]

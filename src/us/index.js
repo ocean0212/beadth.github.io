@@ -6,6 +6,7 @@ import {getMtData} from "./store/actionCreators";
 import {BreadthSimple, Headers, ADBanner, Bottom, GAlertMessage} from "./USUI";
 import {BreadthHeatMap} from "./breadth";
 import Economic from './economic/'
+import Dashboard from "./dashboard";
 
 const { TabPane } = Tabs;
 
@@ -55,6 +56,7 @@ const Content = (props) => {
           <Economic/>
         </TabPane>
         <TabPane tab="市场全景" disabled key="content13">
+          <Dashboard/>
         </TabPane>
       </Tabs>
   )
