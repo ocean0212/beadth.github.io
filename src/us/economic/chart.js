@@ -5,6 +5,9 @@ import {
   Line,
   Axis,
   Tooltip,
+  LineAdvance,
+  Legend,
+  Interaction,
 } from 'bizcharts';
 import {CHART_COPYRIGHT} from "../../constants";
 
@@ -207,6 +210,39 @@ export const OliCopperGoldRatio = (props) => {
         <Line position="t*copper_gold_ratio" color={"#FF8C00"}/>
         <Line position="t*interest_rates" color={"#000000"}/>
         <Line position="t*oil_gold_ratio" color={"#7CFC00"}/>
+      </Chart>
+    </React.Fragment>
+  );
+}
+
+export const TreasuryRealRates = (props) => {
+  props.treasuryRealRatesData.transform({
+    type: 'fold',
+    fields: ['5 YR', '7 YR', '10 YR', '20 YR', '30 YR'], // 展开字段集
+    key: 'year', // key字段
+    value: 'value', // value字段
+  })
+  return (
+    <React.Fragment>
+      <Chart padding="auto" height={400} data={props.treasuryRealRatesData.rows}  autoFit>
+        <Tooltip shared showCrosshairs />
+        {/*<Line shape="smooth" position="Date*value" color="year" />*/}
+        <LineAdvance
+          shape="smooth"
+          position="DATE*value"
+          color="year"
+        />
+        <Legend
+          name='year'
+          filter={year => {
+            return year === '5 YR' | year === '10 YR'
+          }}
+          itemName={{
+            style: {
+              fill: "#333"
+            }
+          }} />
+        <Interaction type='legend-filter' />
       </Chart>
     </React.Fragment>
   );

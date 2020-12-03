@@ -8,6 +8,8 @@ const defaultState = fromJS({
   weiDatalist: [],
   OliCopperGoldRatioStatus: true,
   OliCopperGoldRatioData: [],
+  treasuryRealRatesStatus: true,
+  treasuryRealRatesData: [],
 });
 
 const updateSomeHold = (state, action) => {
@@ -32,6 +34,13 @@ const updateOliCopperGoldRatio = (state, action) => {
   })
 }
 
+const updateTreasuryRealRates = (state, action) => {
+  return state.merge({
+    treasuryRealRatesStatus: action.treasuryRealRatesStatus,
+    treasuryRealRatesData: action.treasuryRealRatesData,
+  })
+}
+
 
 // state    整个DOM的数据库
 // action
@@ -44,6 +53,8 @@ const reducer = (state = defaultState, action) => {
       return updateWei(state, action)
     case constants.GET_OLI_COPPER_GOLD_RATIO:
       return updateOliCopperGoldRatio(state, action)
+    case constants.GET_TREASURY_REAL_RATES:
+      return updateTreasuryRealRates(state, action)
     default:
       return state;
   }

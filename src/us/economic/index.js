@@ -1,10 +1,16 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-
-import {getMarketSomaHold, geNewyorktWei, getOliCopperGoldRatio} from "./store/actionCreators";
 import {Col, Row,Collapse} from "antd";
+
+import {getMarketSomaHold, geNewyorktWei, getOliCopperGoldRatio,getTreasuryRealRates} from "./store/actionCreators";
+
 import {Loading} from "../USUI";
-import {MarketSomaHoldChart, WeiChart, OliCopperGoldRatio} from "./chart";
+import {
+  MarketSomaHoldChart,
+  WeiChart,
+  OliCopperGoldRatio,
+  TreasuryRealRates,
+} from "./chart";
 
 const { Panel } = Collapse;
 
@@ -16,7 +22,7 @@ class Economic extends Component{
       <React.Fragment>
         <Row justify="center" align="top">
           <Col xs={{span: 24}} sm={{span: 24}} md={{span: 20}} lg={{span: 16}} xl={{span: 16}} align="top">
-            <Collapse defaultActiveKey={['eco2']} >
+            <Collapse defaultActiveKey={['eco2', 'eco3',]} >
               <Panel header="美联储披露持仓" key="eco1" disabled>
                 {
                   this.props.somaHolDataStatus
@@ -38,11 +44,11 @@ class Economic extends Component{
                     : <OliCopperGoldRatio {...this.props}/>
                 }
               </Panel>
-              <Panel header="美国5/10年利率" key="eco4" disabled>
+              <Panel header="美国国库实际利率" key="eco4">
                 {
-                  this.props.weiStatus
+                  this.props.treasuryRealRatesStatus
                     ? <Loading/>
-                    : <WeiChart {...this.props}/>
+                    : <TreasuryRealRates {...this.props}/>
                 }
               </Panel>
             </Collapse>
@@ -55,6 +61,7 @@ class Economic extends Component{
     this.props.getSomaHold();
     this.props.getWei();
     this.props.getOliCopperGR();
+    this.props.getTreasuryRealRates();
   }
 }
 
@@ -66,6 +73,8 @@ const mapState = (state) => {
     weiDatalist: state.getIn(['usEconomic', 'weiDatalist']),
     OliCopperGoldRatioStatus: state.getIn(['usEconomic', 'OliCopperGoldRatioStatus']),
     OliCopperGoldRatioData: state.getIn(['usEconomic', 'OliCopperGoldRatioData']),
+    treasuryRealRatesStatus: state.getIn(['usEconomic', 'treasuryRealRatesStatus']),
+    treasuryRealRatesData: state.getIn(['usEconomic', 'treasuryRealRatesData']),
   }
 };
 
@@ -80,6 +89,9 @@ const mapDispatch = (dispatch) => ({
   },
   getOliCopperGR(){
     dispatch(getOliCopperGoldRatio())
+  },
+  getTreasuryRealRates(){
+    dispatch(getTreasuryRealRates())
   }
 })
 

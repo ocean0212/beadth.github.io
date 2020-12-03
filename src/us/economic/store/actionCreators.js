@@ -47,6 +47,17 @@ export const OliCopperGoldRatioFormat = (srcData) => {
   }
 }
 
+export const TreasuryRealRatesFormat = (srcData) => {
+  var data = JSON.parse(Base64.decode(srcData.data));
+  console.log(data)
+  const dv = new DataSet.DataView().source(data);
+  return {
+    type: constants.GET_TREASURY_REAL_RATES,
+    treasuryRealRatesStatus: false,
+    treasuryRealRatesData: dv,
+  }
+}
+
 export const geNewyorktWei = () => {
   return (dispatch) => {
     axios.get("us/newyorkfed_wei.json").then((res) => {
@@ -72,6 +83,16 @@ export const getOliCopperGoldRatio = () => {
   return (dispatch) => {
     axios.get("us/oli_copper_gold_ratio_5.json").then((res) => {
       dispatch(OliCopperGoldRatioFormat(res.data))
+    }).catch(() => { // ajax request error
+      console.log("error")
+    })
+  }
+}
+
+export const getTreasuryRealRates = () => {
+  return (dispatch) => {
+    axios.get("us/treasury_real_rates_5.json").then((res) => {
+      dispatch(TreasuryRealRatesFormat(res.data))
     }).catch(() => { // ajax request error
       console.log("error")
     })
