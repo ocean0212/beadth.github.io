@@ -37,6 +37,16 @@ export const weiFormat = (srcData) => {
   }
 };
 
+export const OliCopperGoldRatioFormat = (srcData) => {
+  var data = JSON.parse(Base64.decode(srcData.data));
+  const dv = new DataSet.DataView().source(data);
+  return {
+    type: constants.GET_OLI_COPPER_GOLD_RATIO,
+    OliCopperGoldRatioStatus: false,
+    OliCopperGoldRatioData: dv,
+  }
+}
+
 export const geNewyorktWei = () => {
   return (dispatch) => {
     axios.get("us/newyorkfed_wei.json").then((res) => {
@@ -52,6 +62,16 @@ export const getMarketSomaHold = () => {
   return (dispatch) => {
     axios.get("us/newyorkfed_makert_hold.json").then((res) => {
       dispatch(marketSomaHoldFormat(res.data))
+    }).catch(() => { // ajax request error
+      console.log("error")
+    })
+  }
+}
+
+export const getOliCopperGoldRatio = () => {
+  return (dispatch) => {
+    axios.get("us/oli_copper_gold_ratio_5.json").then((res) => {
+      dispatch(OliCopperGoldRatioFormat(res.data))
     }).catch(() => { // ajax request error
       console.log("error")
     })

@@ -6,6 +6,8 @@ const defaultState = fromJS({
   somaHolDataList: [{},],
   weiStatus: true,
   weiDatalist: [],
+  OliCopperGoldRatioStatus: true,
+  OliCopperGoldRatioData: [],
 });
 
 const updateSomeHold = (state, action) => {
@@ -23,6 +25,13 @@ const updateWei = (state, action) => {
   })
 }
 
+const updateOliCopperGoldRatio = (state, action) => {
+  return state.merge({
+    OliCopperGoldRatioStatus: action.OliCopperGoldRatioStatus,
+    OliCopperGoldRatioData: action.OliCopperGoldRatioData,
+  })
+}
+
 
 // state    整个DOM的数据库
 // action
@@ -33,6 +42,8 @@ const reducer = (state = defaultState, action) => {
       return updateSomeHold(state, action)
     case constants.GET_NEWYORKFED_WEI:
       return updateWei(state, action)
+    case constants.GET_OLI_COPPER_GOLD_RATIO:
+      return updateOliCopperGoldRatio(state, action)
     default:
       return state;
   }

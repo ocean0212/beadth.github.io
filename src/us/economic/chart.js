@@ -3,6 +3,7 @@ import {
   Annotation,
   Chart,
   Line,
+  Axis,
   Tooltip,
 } from 'bizcharts';
 import {CHART_COPYRIGHT} from "../../constants";
@@ -65,7 +66,6 @@ export const WeiChart = (props) => {
     flagClo = "#FF0000"
   }
 
-
   for (var i=0; i<props.weiDatalist.rows.length;i++){
     if (props.weiDatalist.rows[i].value === minVal){
       var minTime = props.weiDatalist.rows[i].time
@@ -86,13 +86,11 @@ export const WeiChart = (props) => {
     }
   }
 
-
-
-
   return (
     <div>
       <Chart padding={[10, 20, 70, 40]} scale={scale} autoFit height={500} data={props.weiDatalist.rows}>
         <Line shape="line" position="time*value" color="type" />
+        <Tooltip shared showCrosshairs />
         <Annotation.DataMarker
           position={[current.time, current.value]}
           text={{
@@ -173,4 +171,43 @@ export const WeiChart = (props) => {
         <Annotation.Text {...CHART_COPYRIGHT}/>
       </Chart>
     </div>)
+}
+
+export const OliCopperGoldRatio = (props) => {
+
+  const scale = {
+    copper_gold_ratio: {
+      min: 0.00006,
+      max: 0.00019,
+      alias: "铜金比",
+    },
+    interest_rates: {
+      min: 0,
+      max: 3.5,
+      alias: "利率",
+    },
+    oil_gold_ratio: {
+      min: -0.03,
+      max: 0.07,
+      alias: "油金比",
+    },
+    t:{
+      alias: "日期"
+    }
+  }
+
+
+  return (
+    <React.Fragment>
+      <Chart padding="auto" scale={scale} height={400} data={props.OliCopperGoldRatioData.rows}  autoFit>
+        <Tooltip shared showCrosshairs />
+        <Axis name="copper_gold_ratio" label={null}/>
+        <Axis name="interest_rates" label={null}/>
+        <Axis name="oil_gold_ratio" label={null}/>
+        <Line position="t*copper_gold_ratio" color={"#FF8C00"}/>
+        <Line position="t*interest_rates" color={"#000000"}/>
+        <Line position="t*oil_gold_ratio" color={"#7CFC00"}/>
+      </Chart>
+    </React.Fragment>
+  );
 }

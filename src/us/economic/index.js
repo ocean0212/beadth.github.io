@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 
-import {getMarketSomaHold, geNewyorktWei} from "./store/actionCreators";
+import {getMarketSomaHold, geNewyorktWei, getOliCopperGoldRatio} from "./store/actionCreators";
 import {Col, Row,Collapse} from "antd";
 import {Loading} from "../USUI";
-import {MarketSomaHoldChart, WeiChart} from "./chart";
+import {MarketSomaHoldChart, WeiChart, OliCopperGoldRatio} from "./chart";
 
 const { Panel } = Collapse;
 
@@ -31,11 +31,11 @@ class Economic extends Component{
                     : <WeiChart {...this.props}/>
                 }
               </Panel>
-              <Panel header="油金比/铜金比" key="eco3" disabled>
+              <Panel header="油金比/铜金比/利率" key="eco3" >
                 {
-                  this.props.weiStatus
+                  this.props.OliCopperGoldRatioStatus
                     ? <Loading/>
-                    : <WeiChart {...this.props}/>
+                    : <OliCopperGoldRatio {...this.props}/>
                 }
               </Panel>
               <Panel header="美国5/10年利率" key="eco4" disabled>
@@ -54,6 +54,7 @@ class Economic extends Component{
   componentDidMount() {
     this.props.getSomaHold();
     this.props.getWei();
+    this.props.getOliCopperGR();
   }
 }
 
@@ -63,6 +64,8 @@ const mapState = (state) => {
     somaHolDataStatus: state.getIn(['usEconomic', 'somaHolDataStatus']),
     weiStatus: state.getIn(['usEconomic', 'weiStatus']),
     weiDatalist: state.getIn(['usEconomic', 'weiDatalist']),
+    OliCopperGoldRatioStatus: state.getIn(['usEconomic', 'OliCopperGoldRatioStatus']),
+    OliCopperGoldRatioData: state.getIn(['usEconomic', 'OliCopperGoldRatioData']),
   }
 };
 
@@ -74,6 +77,9 @@ const mapDispatch = (dispatch) => ({
   },
   getWei(){
     dispatch(geNewyorktWei())
+  },
+  getOliCopperGR(){
+    dispatch(getOliCopperGoldRatio())
   }
 })
 
